@@ -14,6 +14,16 @@ namespace MUNitySchema.Models.Resolution
         public DateTime SubmitTime { get; set; }
         public string Type { get; set; }
 
+        public virtual bool Apply(OperativeSection section)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual bool Deny(OperativeSection section)
+        {
+            throw new NotImplementedException();
+        }
+
         public AbstractAmendment()
         {
             Id = Guid.NewGuid().ToString();

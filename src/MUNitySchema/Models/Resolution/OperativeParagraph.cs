@@ -56,6 +56,8 @@ namespace MUNitySchema.Models.Resolution
         public OperativeParagraph(string text = "")
         {
             this.Text = text;
+            this.OperativeParagraphId = Guid.NewGuid().ToString();
+            this.Children = new ObservableCollection<OperativeParagraph>();
         }
     }
 }
