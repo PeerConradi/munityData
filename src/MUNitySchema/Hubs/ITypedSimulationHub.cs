@@ -7,7 +7,7 @@ using static MUNitySchema.Schema.Simulation.SimulationEnums;
 
 namespace MUNitySchema.Hubs
 {
-    interface ITypedSimulationHub
+    public interface ITypedSimulationHub
     {
         Task RolesChanged(int simulationId, IEnumerable<SimulationRoleItem> Roles);
 
