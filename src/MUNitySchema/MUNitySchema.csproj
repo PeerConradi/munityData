@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Peer Conradi</Authors>
+    <Description>A libary that contains the Schema used by the MUNityCore for an easier implementation of the munity API into .NET languages.</Description>
+    <Copyright>Copyright 2020</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/PeerConradi/munityData</RepositoryUrl>
+    <PackageReleaseNotes>First implementation of the MUNity Schema into this package. MUNity Core will use this package and later versions in the next implementations.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
