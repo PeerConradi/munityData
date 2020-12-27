@@ -86,5 +86,16 @@ namespace MUNitySchema.Models.ListOfSpeakers
         public DateTime StartSpeakerTime { get; set; }
 
         public DateTime StartQuestionTime { get; set; }
+
+        public ListOfSpeakers()
+        {
+            this.Speakers = new ObservableCollection<Speaker>();
+            this.Questions = new ObservableCollection<Speaker>();
+            this.ListOfSpeakersId = Guid.NewGuid().ToString();
+            this.SpeakerTime = new TimeSpan(0, 3, 0);
+            this.QuestionTime = new TimeSpan(0, 0, 30);
+            this.PausedSpeakerTime = this.SpeakerTime;
+            this.PausedQuestionTime = this.QuestionTime;
+        }
     }
 }

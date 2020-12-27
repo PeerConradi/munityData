@@ -24,6 +24,21 @@ namespace MunityNUnitTest.ResolutionTest
         }
 
         [Test]
+        public void TestInstanceHasId()
+        {
+            var amendment = new AddAmendment();
+            Assert.IsFalse(string.IsNullOrEmpty(amendment.Id));
+        }
+
+        [Test]
+        public void TestIdsAreDifferent()
+        {
+            var amendmentOne = new AddAmendment();
+            var amendmentTwo = new AddAmendment();
+            Assert.IsFalse(amendmentOne.Id == amendmentTwo.Id);
+        }
+
+        [Test]
         public void TestApplyAmendment()
         {
             var resolution = new Resolution();
@@ -64,5 +79,7 @@ namespace MunityNUnitTest.ResolutionTest
             resolution.OperativeSection.RemoveAmendment(amendment);
             Assert.AreEqual(1, resolution.OperativeSection.Paragraphs.Count);
         }
+
+
     }
 }
