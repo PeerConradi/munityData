@@ -108,6 +108,13 @@ namespace MUNity.Extensions.ResolutionExtensions
             return newAmendment;
         }
 
+        /// <summary>
+        /// Creates a new Amendment for a TextChange of a paragraph with a given Id.
+        /// </summary>
+        /// <param name="section">The operative Section of the resolution that this Admendment should be created in and also where the operative paragraph can be found.</param>
+        /// <param name="paragraphId">The OperativeParagraphId of the target paragraph that the text should be changed in.</param>
+        /// <param name="newText">The new Text that the paragraph should be set to if the created Amendment is Accepted/Applied.</param>
+        /// <returns></returns>
         public static ChangeAmendment CreateChangeAmendment(this OperativeSection section, string paragraphId, string newText = "")
         {
             if (section.FindOperativeParagraph(paragraphId) == null)
@@ -121,7 +128,16 @@ namespace MUNity.Extensions.ResolutionExtensions
         }
 
 
-
+        /// <summary>
+        /// Creates a Move Amendment. This will also create a new Operative paragraph at the palce where the amendment should be moved to. Not that this virtual Paragraph
+        /// will copy the text once when the amendment is created and once when the amendment is accepted. If the text of the paragraph changed in the mean time the displayed
+        /// text of the virtual operative paragraph may differ.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="paragraphId"></param>
+        /// <param name="targetIndex"></param>
+        /// <param name="parentParagraph"></param>
+        /// <returns></returns>
         public static MoveAmendment CreateMoveAmendment(this OperativeSection section, string paragraphId, int targetIndex, OperativeParagraph parentParagraph = null)
         {
             var sourceParagraph = section.FindOperativeParagraph(paragraphId);
@@ -140,7 +156,15 @@ namespace MUNity.Extensions.ResolutionExtensions
             return newAmendment;
         }
 
-
+        /// <summary>
+        /// Creates a new Add Amendment to add a new operative paragraph at a certain position. This will also create a virtual Paragraph at the stop where
+        /// the new paragraph may be when it is accepted.
+        /// </summary>
+        /// <param name="section">The operative Section of the Resolution where this paragraph should be added.</param>
+        /// <param name="targetIndex">The index where the paragraph should be added.</param>
+        /// <param name="text">The Text of the new paragraph</param>
+        /// <param name="parentParagraph">Use this parent paragraph if the new paragraph should be a sub point</param>
+        /// <returns></returns>
         public static AddAmendment CreateAddAmendment(this OperativeSection section, int targetIndex, string text = "", OperativeParagraph parentParagraph = null)
         {
             var virtualParagraph = new OperativeParagraph(text);
@@ -153,6 +177,12 @@ namespace MUNity.Extensions.ResolutionExtensions
             return amendment;
         }
 
+        /// <summary>
+        /// Creates a new amendment to delete a certain operative paragraph.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="paragraph"></param>
+        /// <returns></returns>
         public static DeleteAmendment CreateDeleteAmendment(this OperativeSection section, OperativeParagraph paragraph) => section.CreateDeleteAmendment(paragraph.OperativeParagraphId);
 
         /// <summary>

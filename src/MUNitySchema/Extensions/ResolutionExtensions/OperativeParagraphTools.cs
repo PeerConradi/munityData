@@ -7,8 +7,15 @@ using System.Text;
 
 namespace MUNity.Extensions.ResolutionExtensions
 {
+
+    /// <summary>
+    /// This set of extension methods contains logic to work with operative paragraphs and the operative section.
+    /// </summary>
     public static class OperativeParagraphTools
     {
+        /// <summary>
+        /// Allowed operators. This list can contain Regex symbols.
+        /// </summary>
         private static IEnumerable<string> OperativeParagraphOperators
         {
             get
@@ -101,6 +108,12 @@ namespace MUNity.Extensions.ResolutionExtensions
             }
         }
 
+        /// <summary>
+        /// Creates a new Operative paragraph inside a given OperativeSection.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static OperativeParagraph CreateOperativeParagraph(this OperativeSection section, string text = "")
         {
             var paragraph = new OperativeParagraph();
@@ -109,6 +122,13 @@ namespace MUNity.Extensions.ResolutionExtensions
             return paragraph;
         }
 
+        /// <summary>
+        /// Creates a new Child paragraph in a given Resolution.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="parentId"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static OperativeParagraph CreateChildParagraph(this OperativeSection section, string parentId, string text = "")
         {
             var parentParagraph = section.FindOperativeParagraph(parentId);
@@ -121,14 +141,34 @@ namespace MUNity.Extensions.ResolutionExtensions
             return newParagraph;
         }
 
+        /// <summary>
+        /// Will also create a Child paragraph by calling the CreateChildParagraph function and pass the Id to it.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="parent"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static OperativeParagraph CreateChildParagraph(this OperativeSection section, OperativeParagraph parent, string text = "")
             => section.CreateChildParagraph(parent.OperativeParagraphId, text);
 
+        /// <summary>
+        /// Will search for an Operative Paragraph with the given id. Will return null if the paragraph was not found.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static OperativeParagraph FindOperativeParagraph(this OperativeSection section, string id)
         {
             return section.FirstOrDefault(n => n.OperativeParagraphId == id);
         }
 
+        /// <summary>
+        /// An internal function to go throw all operative paragraphs and their child paragraphs and get the path of the paragraph.
+        /// </summary>
+        /// <param name="paragraph"></param>
+        /// <param name="targetId"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
         private static OperativeParagraph FindOperativeParagraphPathRecursive(OperativeParagraph paragraph, string targetId, List<OperativeParagraph> path)
         {
             if (paragraph.OperativeParagraphId == targetId)
