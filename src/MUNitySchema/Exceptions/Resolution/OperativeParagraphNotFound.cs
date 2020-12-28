@@ -4,6 +4,10 @@ using System.Text;
 
 namespace MUNitySchema.Exceptions.Resolution
 {
+
+    /// <summary>
+    /// Throw this exception when an operative section is not found inside the OperativeSection.
+    /// </summary>
     [Serializable]
     public class OperativeParagraphNotFoundException : Exception
     {

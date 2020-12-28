@@ -4,6 +4,11 @@ using System.Text;
 
 namespace MUNitySchema.Exceptions.Resolution
 {
+
+    /// <summary>
+    /// Throw this Exception when the given implementation of the AbstractAmendment is not capable to work with 
+    /// in a given case.
+    /// </summary>
     [Serializable]
     public class UnsupportedAmendmentTypeException : Exception
     {

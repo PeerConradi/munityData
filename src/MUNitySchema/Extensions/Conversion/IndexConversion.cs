@@ -6,6 +6,12 @@ namespace MUNity.Extensions.Conversion
 {
     public static class IndexConversion
     {
+
+        /// <summary>
+        /// Converts a given number between 1 and 3999 to the roman code.
+        /// </summary>
+        /// <param name="number">Integer between 1 and 3999</param>
+        /// <returns></returns>
         public static string ToRoman(this int number)
         {
             if ((number < 0) || (number > 3999)) throw new ArgumentOutOfRangeException("insert value betwheen 1 and 3999");
@@ -26,6 +32,12 @@ namespace MUNity.Extensions.Conversion
             throw new ArgumentOutOfRangeException("something bad happened");
         }
 
+        /// <summary>
+        /// Returns a given array of numbers to the path of operative amendments.
+        /// For example: 1, 1.a, 1.a.i 1.a.ii, 1.a.ii.1 etc.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string ToPathname(this int[] input)
         {
             var path = "";
@@ -52,14 +64,25 @@ namespace MUNity.Extensions.Conversion
             return path;
         }
 
+        /// <summary>
+        /// returns a given number into a letter for example 0 = a, 1=b, 26=aa, 27=ab...
+        /// </summary>
+        /// <param name="number">The input number that should be converted it has to be zero or higher</param>
+        /// <returns></returns>
         public static string ToLetter(this int number)
         {
-            var letters = "abcdefghijklmnopqrstuvwxyz";
-            if (number < letters.Length)
-            {
-                return letters[number].ToString();
-            }
-            throw new ArgumentOutOfRangeException("Not supported by now! Only 26 letters");
+            return NumberAsLetter(number);
         }
+
+        private static string NumberAsLetter(int index)
+        {
+            int quotient = index / 26;
+            if (quotient > 0)
+                return NumberAsLetter(quotient - 1) + chars[index % chars.Length].ToString();
+            else
+                return chars[index % chars.Length].ToString();
+        }
+
+        private static char[] chars = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
     }
 }
