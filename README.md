@@ -17,13 +17,13 @@ PM> Add-Package MUNityBase
 
 ## Use the List of Speakers
 
-```chsarp
+```C#
 #using MUNity.Extensions.LoSExtensions;     // For the functionality
 #using MUNitySchema.Models.ListOfSpeakers;  // For the general object Structure
 ```
 
 The base logic could be like this:
-```chsarp
+```C#
 var listOfSpeakers = new ListOfSpeakers();
 listOfSpeakers.AddSpeaker("Germany", "de");
 listOfSpeakers.AddSpeaker("France", "fr");
