@@ -13,11 +13,13 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: "3.1.300"
+      - name: change dir
+        run: cd ./src
       - name: Generate Documentation
         uses: FuLagann/csharp-docs-generator@v1.0
         with:
-          build-tasks: cd ./src, dotnet build
-          cleanup-tasks: cd ./src, dotnet clean
+          build-tasks: dotnet build
+          cleanup-tasks: dotnet clean
           binaries: src/MUNitySchema/bin/Debug/netstandard2.0/MUNitySchema.dll
           output-path: docs/api
           user-email: csharp.doc.gen@gmail.com
