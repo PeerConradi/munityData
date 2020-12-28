@@ -5,10 +5,21 @@ using MUNity.Extensions.ResolutionExtensions;
 
 namespace MUNitySchema.Models.Resolution
 {
+    /// <summary>
+    /// An Amendment to move an operative paragraph to a new position.
+    /// </summary>
     public class MoveAmendment : AbstractAmendment
     {
+        /// <summary>
+        /// The Id of the virtual paragraph that represents the new position of the operative paragraph.
+        /// </summary>
         public string NewTargetSectionId { get; set; }
 
+        /// <summary>
+        /// Will delete the opld amendment and move all its settings to the currently virtual paragraph.
+        /// </summary>
+        /// <param name="parentSection"></param>
+        /// <returns></returns>
         public override bool Apply(OperativeSection parentSection)
         {
             var placeholder = parentSection.FindOperativeParagraph(NewTargetSectionId);
@@ -31,6 +42,11 @@ namespace MUNitySchema.Models.Resolution
             return true;
         }
 
+        /// <summary>
+        /// Will remove the amendment and the virtual paragraph.
+        /// </summary>
+        /// <param name="parentSection"></param>
+        /// <returns></returns>
         public override bool Deny(OperativeSection parentSection)
         {
             parentSection.RemoveAmendment(this);

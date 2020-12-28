@@ -4,6 +4,9 @@ using System.Text;
 
 namespace MUNitySchema.Models.Resolution
 {
+    /// <summary>
+    /// A tag for a comment that could display: importand, question etc.
+    /// </summary>
     public class CommentTag
     {
         /// <summary>
@@ -23,6 +26,9 @@ namespace MUNitySchema.Models.Resolution
         /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// Creates a new Comment Tag and will give it an id.
+        /// </summary>
         public CommentTag()
         {
             this.Id = Guid.NewGuid().ToString();

@@ -4,6 +4,12 @@ using System.Text;
 
 namespace MUNity.Extensions.Conversion
 {
+
+    /// <summary>
+    /// Extension Methods to Convert the Index of preamble Paragraphs or operative paragraphs to the default
+    /// Schemas for example: 1.a.i, 1.a.ii.
+    /// You could also use this Extensions to get all roman letters or numbers.
+    /// </summary>
     public static class IndexConversion
     {
 
@@ -83,6 +89,6 @@ namespace MUNity.Extensions.Conversion
                 return chars[index % chars.Length].ToString();
         }
 
-        private static char[] chars = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+        private static readonly char[] chars = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
     }
 }

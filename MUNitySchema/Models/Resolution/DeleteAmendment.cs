@@ -5,8 +5,17 @@ using MUNity.Extensions.ResolutionExtensions;
 
 namespace MUNitySchema.Models.Resolution
 {
+
+    /// <summary>
+    /// The Delete Amendment is a type of amendment to remove an operative paragraph from the resolution.
+    /// </summary>
     public class DeleteAmendment : AbstractAmendment
     {
+        /// <summary>
+        /// Removes the operative section with all children and amendments that are on it.
+        /// </summary>
+        /// <param name="parentSection"></param>
+        /// <returns></returns>
         public override bool Apply(OperativeSection parentSection)
         {
             var paragraph = parentSection.FindOperativeParagraph(this.TargetSectionId);
@@ -20,6 +29,11 @@ namespace MUNitySchema.Models.Resolution
             return true;
         }
 
+        /// <summary>
+        /// Removes the delete amendment and all other delete amendments that are targeting the same operative paragraph.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
         public override bool Deny(OperativeSection section)
         {
             var count = section.DeleteAmendments.RemoveAll(n =>

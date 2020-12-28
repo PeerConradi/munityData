@@ -4,6 +4,9 @@ using System.Text;
 
 namespace MUNitySchema.Models.Resolution
 {
+    /// <summary>
+    /// The Operative Section of a resolution containing the Paragraphs and the Amendments.
+    /// </summary>
     public class OperativeSection
     {
         public string OperativeSectionId { get; set; }

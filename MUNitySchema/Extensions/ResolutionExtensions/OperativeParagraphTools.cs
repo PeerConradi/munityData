@@ -116,8 +116,10 @@ namespace MUNity.Extensions.ResolutionExtensions
         /// <returns></returns>
         public static OperativeParagraph CreateOperativeParagraph(this OperativeSection section, string text = "")
         {
-            var paragraph = new OperativeParagraph();
-            paragraph.Text = text;
+            var paragraph = new OperativeParagraph
+            {
+                Text = text
+            };
             section.Paragraphs.Add(paragraph);
             return paragraph;
         }
@@ -135,8 +137,10 @@ namespace MUNity.Extensions.ResolutionExtensions
             if (parentParagraph == null)
                 throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException();
 
-            var newParagraph = new OperativeParagraph();
-            newParagraph.Text = text;
+            var newParagraph = new OperativeParagraph
+            {
+                Text = text
+            };
             parentParagraph.Children.Add(newParagraph);
             return newParagraph;
         }
@@ -192,6 +196,14 @@ namespace MUNity.Extensions.ResolutionExtensions
             return null;
         }
 
+        /// <summary>
+        /// Returns the Path of a Operative Paragraph as a List where every paragraph is an element to get to the last.
+        /// For Example
+        /// HeadParagraph > ChildParagraph1 > TargetParagraph.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static List<OperativeParagraph> GetOperativeParagraphPath(this OperativeSection section, string id)
         {
             var path = new List<OperativeParagraph>();
@@ -207,6 +219,12 @@ namespace MUNity.Extensions.ResolutionExtensions
             return null;
         }
 
+        /// <summary>
+        /// Removes an Operative Paragraph from the Operative Section. Will also remove all the amendments that
+        /// are targeting this paragraph.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="paragraph"></param>
         public static void RemoveOperativeParagraph(this OperativeSection section, OperativeParagraph paragraph)
         {
             var path = section.GetOperativeParagraphPath(paragraph.OperativeParagraphId);
@@ -228,7 +246,11 @@ namespace MUNity.Extensions.ResolutionExtensions
             }
         }
 
-
+        /// <summary>
+        /// Will return a list of suple with all information about the operative paragraphs.
+        /// </summary>
+        /// <param name="resolution"></param>
+        /// <returns></returns>
         public static List<(string id, string path, string text)> GetRealOperativeParagraphsInfo(this Resolution resolution)
         {
             var list = new List<(string id, string path, string text)>();
@@ -243,6 +265,12 @@ namespace MUNity.Extensions.ResolutionExtensions
             return list;
         }
 
+        /// <summary>
+        /// Recursive function used by GetRealOperativeParagraphsInfo
+        /// </summary>
+        /// <param name="prePath"></param>
+        /// <param name="paragraph"></param>
+        /// <param name="list"></param>
         private static void AddRealOperativeParagraphInfoRec(string prePath, OperativeParagraph paragraph, List<(string id, string path, string text)> list)
         {
             var newElement = (id: paragraph.OperativeParagraphId, path: prePath, text: paragraph.Text);
@@ -264,6 +292,16 @@ namespace MUNity.Extensions.ResolutionExtensions
             }
         }
 
+        /// <summary>
+        /// Inserts a paragraph into the real position. The index you give here is the one that you would get by blocking all virtual paragraphs out.
+        /// For example: 1, (2), (3), 4, (5) where paragraph 2,3 and 5 are virtual, then the assumption is that paragraph 2 is at index 1 (starting at zero), which is not
+        /// the case. You would pass 2 to this function if you want to add a paragraph between 4 but before 5.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="paragraph"></param>
+        /// <param name="targetIndex"></param>
+        /// <param name="parentParagraph"></param>
+        /// <returns></returns>
         public static int InsertIntoRealPosition(this OperativeSection section, OperativeParagraph paragraph, int targetIndex, OperativeParagraph parentParagraph)
         {
             if (parentParagraph == null)
@@ -285,7 +323,8 @@ namespace MUNity.Extensions.ResolutionExtensions
         /// Returns the displayed Index name of a Paragraph for example 
         /// 1, 2, 2.a, 2.a.i etc.
         /// </summary>
-        /// <param name="paragraph"></param>
+        /// <param name="section"></param>
+        /// <param name="paragraphId"></param>
         /// <returns></returns>
         public static string GetIndexNameOfOperativeParagraph(this OperativeSection section, string paragraphId)
         {
@@ -307,6 +346,12 @@ namespace MUNity.Extensions.ResolutionExtensions
             return numbers.ToArray().ToPathname();
         }
 
+        /// <summary>
+        /// Returns the Index of a paragraph inside its parent.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="paragraph"></param>
+        /// <returns></returns>
         public static int IndexOfParagraph(this OperativeSection section, OperativeParagraph paragraph)
         {
             int index = section.Paragraphs.IndexOf(paragraph);
@@ -317,7 +362,11 @@ namespace MUNity.Extensions.ResolutionExtensions
         }
 
 
-
+        /// <summary>
+        /// Returns a list of all Ids of all operative paragraphs that exist.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
         public static List<string> GetAllOperativeParagraphIds(this OperativeSection section)
         {
             var list = new List<string>();
@@ -326,49 +375,78 @@ namespace MUNity.Extensions.ResolutionExtensions
             return list;
         }
 
+        /// <summary>
+        /// Will execute a Linq Where inside all operative paragraphs including Child paragraphs.
+        /// </summary>
+        /// <param name="operativeSection"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public static List<OperativeParagraph> WhereParagraph(this OperativeSection operativeSection, Func<OperativeParagraph, bool> predicate)
         {
             var list = new List<OperativeParagraph>();
             list.AddRange(operativeSection.Paragraphs.Where(predicate));
-            operativeSection.Paragraphs.ForEach(n => deepWhere(n, predicate, list));
+            operativeSection.Paragraphs.ForEach(n => DeepWhere(n, predicate, list));
             return list;
         }
 
-        private static void deepWhere(OperativeParagraph parentParagraph, Func<OperativeParagraph, bool> predicate, List<OperativeParagraph> resultList)
+        /// <summary>
+        /// needed fore WhereParagraph.
+        /// </summary>
+        /// <param name="parentParagraph"></param>
+        /// <param name="predicate"></param>
+        /// <param name="resultList"></param>
+        private static void DeepWhere(OperativeParagraph parentParagraph, Func<OperativeParagraph, bool> predicate, List<OperativeParagraph> resultList)
         {
             if (parentParagraph.Children != null && parentParagraph.Children.Any())
             {
                 resultList.AddRange(parentParagraph.Children.Where(predicate));
                 foreach(var child in parentParagraph.Children)
                 {
-                    deepWhere(child, predicate, resultList);
+                    DeepWhere(child, predicate, resultList);
                 }
             }
         }
 
+        /// <summary>
+        /// Will make a Linq FirstOrDefault in all operative paragraphs including child paragraphs.
+        /// </summary>
+        /// <param name="operativeSection"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public static OperativeParagraph FirstOrDefault(this OperativeSection operativeSection, Func<OperativeParagraph, bool> predicate)
         {
             var result = operativeSection.Paragraphs.FirstOrDefault(predicate);
             if (result != null) return result;
             foreach (var s in operativeSection.Paragraphs)
             {
-                result = deepFirstOrDefault(s, predicate);
+                result = DeepFirstOrDefault(s, predicate);
                 if (result != null) return result;
             }
             return null;
         }
 
-        private static OperativeParagraph deepFirstOrDefault(this OperativeParagraph paragraph, Func<OperativeParagraph, bool> predicate)
+        /// <summary>
+        /// used by FirstOrDefault
+        /// </summary>
+        /// <param name="paragraph"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        private static OperativeParagraph DeepFirstOrDefault(this OperativeParagraph paragraph, Func<OperativeParagraph, bool> predicate)
         {
             var result = paragraph.Children.FirstOrDefault(predicate);
             if (result != null) return result;
             foreach (var child in paragraph.Children)
             {
-                return deepFirstOrDefault(child, predicate);
+                return DeepFirstOrDefault(child, predicate);
             }
             return null;
         }
 
+        /// <summary>
+        /// Checks if a paragraph has a Valid Operator by checking it with the List f allowed operators.
+        /// </summary>
+        /// <param name="paragraph"></param>
+        /// <returns></returns>
         public static bool HasValidOperator(this OperativeParagraph paragraph)
         {
             foreach (var op in OperativeParagraphOperators)
@@ -390,10 +468,21 @@ namespace MUNity.Extensions.ResolutionExtensions
         }
 
         #region function linking
+        /// <summary>
+        /// Gets the Index/Pathname of an operative paragraph.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="paragraph"></param>
+        /// <returns></returns>
         public static string GetIndexNameOfOperativeParagraph(this OperativeSection section, OperativeParagraph paragraph) => section.GetIndexNameOfOperativeParagraph(paragraph.OperativeParagraphId);
         #endregion
 
         #region internal
+        /// <summary>
+        /// Adds all children to a list to create one List of all paragraphIds.
+        /// </summary>
+        /// <param name="paragraph"></param>
+        /// <param name="list"></param>
         private static void AddAllChildrenRecursive(OperativeParagraph paragraph, List<string> list)
         {
             if (paragraph.Children != null && paragraph.Children.Any())

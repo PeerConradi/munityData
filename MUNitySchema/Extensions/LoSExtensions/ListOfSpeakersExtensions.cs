@@ -151,6 +151,10 @@ namespace MUNity.Extensions.LoSExtensions
             }
         }
 
+        /// <summary>
+        /// Let you continue with the last given Question time.
+        /// </summary>
+        /// <param name="list"></param>
         public static void ResumeQuestion(this ListOfSpeakers list)
         {
             if (list.CurrentQuestion != null)
@@ -164,6 +168,14 @@ namespace MUNity.Extensions.LoSExtensions
             }
         }
 
+        /// <summary>
+        /// Creates a new instance of s speaker and adds it to the end of speakers.
+        /// The speaker will get an Id from a new Guid.
+        /// </summary>
+        /// <param name="list">The list of speakers that this should be added to.</param>
+        /// <param name="name">The display name of the speaker.</param>
+        /// <param name="iso">The iso that could be used to get an icon.</param>
+        /// <returns></returns>
         public static Speaker AddSpeaker(this ListOfSpeakers list, string name, string iso = "")
         {
             var newSpeaker = new Speaker()
@@ -176,6 +188,13 @@ namespace MUNity.Extensions.LoSExtensions
             return newSpeaker;
         }
 
+        /// <summary>
+        /// Adds someone to the list of questions.
+        /// </summary>
+        /// <param name="list">The list that this should be added to.</param>
+        /// <param name="name">The display name that should be shown inside the list of questions and the current question.</param>
+        /// <param name="iso">The iso that can be used to find an icon.</param>
+        /// <returns></returns>
         public static Speaker AddQuestion(this ListOfSpeakers list, string name, string iso = "")
         {
             var newSpeaker = new Speaker()
@@ -188,6 +207,10 @@ namespace MUNity.Extensions.LoSExtensions
             return newSpeaker;
         }
 
+        /// <summary>
+        /// Resets the Current Speaker and sets that Status to Stopped if the current Status has something to do with the speaker (talking or paused).
+        /// </summary>
+        /// <param name="list"></param>
         public static void ClearCurrentSpeaker(this ListOfSpeakers list)
         {
             if (list.Status == EStatus.Speaking || list.Status == EStatus.SpeakerPaused || list.Status == EStatus.Answer || list.Status == EStatus.AnswerPaused)
@@ -195,6 +218,10 @@ namespace MUNity.Extensions.LoSExtensions
             list.CurrentQuestion = null;
         }
 
+        /// <summary>
+        /// Removes the current Question and sets the status to stopped if the CurrentQuestion was talking of is paused.
+        /// </summary>
+        /// <param name="list"></param>
         public static void ClearCurrentQuestion(this ListOfSpeakers list)
         {
             if (list.Status == EStatus.Question || list.Status == EStatus.QuestionPaused)
@@ -202,11 +229,23 @@ namespace MUNity.Extensions.LoSExtensions
             list.CurrentQuestion = null;
         }
 
+        /// <summary>
+        /// Gives the speaker some extra seconds. Use a negativ value to remove seconds.
+        /// Note that this does not work when the speaker is paused!
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="seconds"></param>
         public static void AddSpeakerSeconds(this ListOfSpeakers list, int seconds)
         {
             list.StartSpeakerTime = list.StartSpeakerTime.AddSeconds(seconds);
         }
 
+        /// <summary>
+        /// Gives the one asking a question the given amount of seconds or removes them if you give a negativ value.
+        /// Note that this does not work when the Question is Paused!
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="seconds"></param>
         public static void AddQuestionSeconds(this ListOfSpeakers list, int seconds)
         {
             list.StartSpeakerTime = list.StartQuestionTime.AddSeconds(seconds);

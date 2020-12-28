@@ -6,6 +6,10 @@ using System.Linq;
 
 namespace MUNity.Extensions.ResolutionExtensions
 {
+
+    /// <summary>
+    /// Get some more funcinality for working with amendments on the Resolution. documents
+    /// </summary>
     public static class AmendmentExtensions
     {
         /// <summary>
@@ -102,8 +106,10 @@ namespace MUNity.Extensions.ResolutionExtensions
             if (section.FindOperativeParagraph(paragraphId) == null)
                 throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException();
 
-            DeleteAmendment newAmendment = new DeleteAmendment();
-            newAmendment.TargetSectionId = paragraphId;
+            DeleteAmendment newAmendment = new DeleteAmendment
+            {
+                TargetSectionId = paragraphId
+            };
             section.PushAmendment(newAmendment);
             return newAmendment;
         }
@@ -120,9 +126,11 @@ namespace MUNity.Extensions.ResolutionExtensions
             if (section.FindOperativeParagraph(paragraphId) == null)
                 throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException();
 
-            var newAmendment = new ChangeAmendment();
-            newAmendment.TargetSectionId = paragraphId;
-            newAmendment.NewText = newText;
+            var newAmendment = new ChangeAmendment
+            {
+                TargetSectionId = paragraphId,
+                NewText = newText
+            };
             section.PushAmendment(newAmendment);
             return newAmendment;
         }
@@ -144,12 +152,16 @@ namespace MUNity.Extensions.ResolutionExtensions
             if (sourceParagraph == null)
                 throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException();
 
-            var newAmendment = new MoveAmendment();
-            newAmendment.TargetSectionId = paragraphId;
-            var virtualParagraph = new OperativeParagraph();
-            virtualParagraph.IsLocked = true;
-            virtualParagraph.IsVirtual = true;
-            virtualParagraph.Text = sourceParagraph.Text;
+            var newAmendment = new MoveAmendment
+            {
+                TargetSectionId = paragraphId
+            };
+            var virtualParagraph = new OperativeParagraph
+            {
+                IsLocked = true,
+                IsVirtual = true,
+                Text = sourceParagraph.Text
+            };
             newAmendment.NewTargetSectionId = virtualParagraph.OperativeParagraphId;
             section.InsertIntoRealPosition(virtualParagraph, targetIndex, parentParagraph);
             section.PushAmendment(newAmendment);
@@ -167,12 +179,16 @@ namespace MUNity.Extensions.ResolutionExtensions
         /// <returns></returns>
         public static AddAmendment CreateAddAmendment(this OperativeSection section, int targetIndex, string text = "", OperativeParagraph parentParagraph = null)
         {
-            var virtualParagraph = new OperativeParagraph(text);
-            virtualParagraph.IsVirtual = true;
-            virtualParagraph.Visible = false;
+            var virtualParagraph = new OperativeParagraph(text)
+            {
+                IsVirtual = true,
+                Visible = false
+            };
             section.InsertIntoRealPosition(virtualParagraph, targetIndex, parentParagraph);
-            var amendment = new AddAmendment();
-            amendment.TargetSectionId = virtualParagraph.OperativeParagraphId;
+            var amendment = new AddAmendment
+            {
+                TargetSectionId = virtualParagraph.OperativeParagraphId
+            };
             section.PushAmendment(amendment);
             return amendment;
         }
@@ -190,6 +206,7 @@ namespace MUNity.Extensions.ResolutionExtensions
         /// Type in 0 to move it to the beginning of the list. Note that 1 will also move it to the start!
         /// When you have two Paragraphs (A and B) and want A to move behind B (B, A) you need to set the targetIndex to 2!
         /// </summary>
+        /// <param name="section">The Operative Section that you want to crate the Move Amendment at.</param>
         /// <param name="paragraph"></param>
         /// <param name="targetIndex"></param>
         /// <param name="parentParagraph"></param>
@@ -197,6 +214,13 @@ namespace MUNity.Extensions.ResolutionExtensions
         public static MoveAmendment CreateMoveAmendment(this OperativeSection section, OperativeParagraph paragraph, int targetIndex, OperativeParagraph parentParagraph = null) =>
             section.CreateMoveAmendment(paragraph.OperativeParagraphId, targetIndex, parentParagraph);
 
+        /// <summary>
+        /// Creates a new Text change amendment.
+        /// </summary>
+        /// <param name="section"></param>
+        /// <param name="paragraph"></param>
+        /// <param name="newText"></param>
+        /// <returns></returns>
         public static ChangeAmendment CreateChangeAmendment(this OperativeSection section, OperativeParagraph paragraph, string newText = "") => section.CreateChangeAmendment(paragraph.OperativeParagraphId, newText);
     }
 }
