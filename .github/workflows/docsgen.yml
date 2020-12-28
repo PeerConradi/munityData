@@ -16,7 +16,7 @@ jobs:
       - name: Generate Documentation
         uses: FuLagann/csharp-docs-generator@v1.0
         with:
-          build-tasks: cd ./src && dotnet build
+          build-tasks: dotnet build
           cleanup-tasks: dotnet clean
           binaries: src/MUNitySchema/bin/Debug/netstandard2.0/MUNitySchema.dll
           output-path: docs/api
