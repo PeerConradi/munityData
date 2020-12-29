@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace MUNitySchema.Models.Resolution
@@ -8,31 +11,8 @@ namespace MUNitySchema.Models.Resolution
     /// <summary>
     /// A Preamble Paragraphs. This type of paragraph cannot have amendments or child paragraphs.
     /// </summary>
-    public class PreambleParagraph
+    public class PreambleParagraph : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Delegate for the Text Changed Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="oldText"></param>
-        /// <param name="newText"></param>
-        public delegate void OnTextChanged(PreambleParagraph sender, string oldText, string newText);
-
-        /// <summary>
-        /// Delegate for the comment changed event
-        /// </summary>
-        /// <param name="sender"></param>
-        public delegate void OnNoticesChanged(PreambleParagraph sender);
-
-        /// <summary>
-        /// Event if the Text has changed.
-        /// </summary>
-        public event OnTextChanged TextChanged;
-
-        /// <summary>
-        /// Event if the Comment (Notices) have changed.
-        /// </summary>
-        public event OnNoticesChanged NoticesChanged;
 
         /// <summary>
         /// The Id of the Preamble Paragraph.
@@ -49,36 +29,42 @@ namespace MUNitySchema.Models.Resolution
             set
             {
                 if (value == _text) return;
-                var oldText = _text;
                 _text = value;
-                TextChanged?.Invoke(this, oldText, value);
+                NotifyPropertyChanged(nameof(Text));
             }
         }
 
+        private bool _isLocked = false;
         /// <summary>
         /// is the paragraph marked as locked. This will not effect the Text Property you can still change the Text or comments
         /// event if this property is set to true (locked).
         /// </summary>
-        public bool IsLocked { get; set; } = false;
+        public bool IsLocked {
+            get => _isLocked;
+            set
+            {
+                _isLocked = value;
+                NotifyPropertyChanged(nameof(IsLocked));
+            }
+        }
 
+        private bool _corrected = false;
         /// <summary>
         /// Marks the paragraph as corrected. Note that this property will still keep its value even if the text is changed.
         /// </summary>
-        public bool Corrected { get; set; }
+        public bool Corrected {
+            get => _corrected; 
+            set
+            {
+                _corrected = value;
+                NotifyPropertyChanged(nameof(Corrected));
+            }
+        }
 
         /// <summary>
         /// A List of comments for this paragraph. This will become an Observable collection in higher versions.
         /// </summary>
-        public List<Comment> Comments { get; set; }
-
-        /// <summary>
-        /// A function to invoke the NoticesChanged from outside of the Function. This will be changed into 
-        /// a property changed event in future implementations.
-        /// </summary>
-        public void InvokeNoticesChanged()
-        {
-            this.NoticesChanged?.Invoke(this);
-        }
+        public ObservableCollection<Comment> Comments { get; set; }
 
         /// <summary>
         /// Creates a new Preamble paragraph.
@@ -86,7 +72,21 @@ namespace MUNitySchema.Models.Resolution
         public PreambleParagraph()
         {
             PreambleParagraphId = Guid.NewGuid().ToString();
-            Comments = new List<Comment>();
+            Comments = new ObservableCollection<Comment>();
+        }
+
+        /// <summary>
+        /// Event that is fired when a property has changed.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Internal Event to fire the Property Changed event.
+        /// </summary>
+        /// <param name="name"></param>
+        protected void NotifyPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

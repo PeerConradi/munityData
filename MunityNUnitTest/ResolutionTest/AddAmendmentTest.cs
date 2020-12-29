@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MUNity.Extensions.ResolutionExtensions;
+using System.Linq;
 
 namespace MunityNUnitTest.ResolutionTest
 {
@@ -104,6 +105,40 @@ namespace MunityNUnitTest.ResolutionTest
             Assert.AreEqual(1, resolution.OperativeSection.Paragraphs.Count);
         }
 
+        /// <summary>
+        /// Test that deleting the amendment will remove the amendment from the Add Amendment List of the oeprative section.
+        /// </summary>
+        [Test]
+        public void TestDeleteAddAmendmentRemovesAmendment()
+        {
+            var resolution = new Resolution();
+            var amendment = resolution.OperativeSection.CreateAddAmendment(0, "New Paragraph");
+            resolution.OperativeSection.RemoveAmendment(amendment);
+            Assert.IsFalse(resolution.OperativeSection.AddAmendments.Contains(amendment));
+        }
 
+        /// <summary>
+        /// Test that deny the amendment is removing the amendment from the list.
+        /// </summary>
+        [Test]
+        public void TestDenyAmendmentRemovesAmendment()
+        {
+            var resolution = new Resolution();
+            var amendment = resolution.OperativeSection.CreateAddAmendment(0, "New Paragraph");
+            amendment.Deny(resolution.OperativeSection);
+            Assert.IsFalse(resolution.OperativeSection.AddAmendments.Contains(amendment));
+        }
+
+        /// <summary>
+        /// Test that denying the amendment will remove the created virtual operative paragraph.
+        /// </summary>
+        [Test]
+        public void TestDenyAmendmentRemovesVirtualParagraph()
+        {
+            var resolution = new Resolution();
+            var amendment = resolution.OperativeSection.CreateAddAmendment(0, "New Paragraph");
+            amendment.Deny(resolution.OperativeSection);
+            Assert.IsFalse(resolution.OperativeSection.Paragraphs.Any());
+        }
     }
 }

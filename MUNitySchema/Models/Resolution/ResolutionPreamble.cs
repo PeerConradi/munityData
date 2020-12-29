@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace MUNitySchema.Models.Resolution
@@ -17,7 +18,7 @@ namespace MUNitySchema.Models.Resolution
         /// <summary>
         /// a list of paragraphs of the preamble.
         /// </summary>
-        public List<PreambleParagraph> Paragraphs { get; set; }
+        public ObservableCollection<PreambleParagraph> Paragraphs { get; set; }
 
         /// <summary>
         /// creates a new preamble.
@@ -25,7 +26,7 @@ namespace MUNitySchema.Models.Resolution
         public ResolutionPreamble()
         {
             PreambleId = Guid.NewGuid().ToString();
-            Paragraphs = new List<PreambleParagraph>();
+            Paragraphs = new ObservableCollection<PreambleParagraph>();
         }
     }
 }
