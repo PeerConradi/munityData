@@ -7,8 +7,14 @@ using MUNity.Extensions.ResolutionExtensions;
 
 namespace MunityNUnitTest.ResolutionTest
 {
+    /// <summary>
+    /// Test cases for the Amendment Type to add a new operative paragraph.
+    /// </summary>
     public class AddAmendmentTest
     {
+        /// <summary>
+        /// Test creating an instance of this type of amendment.
+        /// </summary>
         [Test]
         public void TestCreateInstance()
         {
@@ -23,6 +29,9 @@ namespace MunityNUnitTest.ResolutionTest
             Assert.Contains(amendment, resolution.OperativeSection.AddAmendments);
         }
 
+        /// <summary>
+        /// Test that a new created instance of this amendment type has an id.
+        /// </summary>
         [Test]
         public void TestInstanceHasId()
         {
@@ -30,6 +39,9 @@ namespace MunityNUnitTest.ResolutionTest
             Assert.IsFalse(string.IsNullOrEmpty(amendment.Id));
         }
 
+        /// <summary>
+        /// Test that two created amendments dont have the same id.
+        /// </summary>
         [Test]
         public void TestIdsAreDifferent()
         {
@@ -38,6 +50,9 @@ namespace MunityNUnitTest.ResolutionTest
             Assert.IsFalse(amendmentOne.Id == amendmentTwo.Id);
         }
 
+        /// <summary>
+        /// Test that this amendment can be applied and will create a new paragraph.
+        /// </summary>
         [Test]
         public void TestApplyAmendment()
         {
@@ -50,6 +65,9 @@ namespace MunityNUnitTest.ResolutionTest
             Assert.AreEqual("New Paragraph", resolution.OperativeSection.Paragraphs[1].Text);
         }
 
+        /// <summary>
+        /// Test that when this amendment is applied the target paragraph is not virtual anymore.
+        /// </summary>
         [Test]
         public void TestApplyAmendmentVirtualFalse()
         {
@@ -60,6 +78,9 @@ namespace MunityNUnitTest.ResolutionTest
             Assert.IsFalse(resolution.OperativeSection.Paragraphs[1].IsVirtual);
         }
 
+        /// <summary>
+        /// Test that when this amendment is applied the amendment is removed from the list.
+        /// </summary>
         [Test]
         public void TestApplyAmendmentRemovesAmendment()
         {
@@ -70,6 +91,9 @@ namespace MunityNUnitTest.ResolutionTest
             Assert.IsFalse(resolution.OperativeSection.AddAmendments.Contains(amendment));
         }
 
+        /// <summary>
+        /// Test that when this amendment is deleted the paragraph is also deleted.
+        /// </summary>
         [Test]
         public void TestDeleteAddAmendment()
         {

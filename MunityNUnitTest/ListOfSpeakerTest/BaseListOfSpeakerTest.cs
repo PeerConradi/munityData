@@ -8,8 +8,14 @@ using System.Linq;
 
 namespace MunityNUnitTest.ListOfSpeakerTest
 {
-    class BaseListOfSpeakerTest
+    /// <summary>
+    /// Basic test cases for the list of speakers.
+    /// </summary>
+    public class BaseListOfSpeakerTest
     {
+        /// <summary>
+        /// Test creating an instance of a list of speakers.
+        /// </summary>
         [Test]
         public void TestCreate()
         {
@@ -21,6 +27,9 @@ namespace MunityNUnitTest.ListOfSpeakerTest
             Assert.IsNull(instance.CurrentSpeaker);
         }
 
+        /// <summary>
+        /// Test add a speaker to the list of speakers.
+        /// </summary>
         [Test]
         public void TestAddSpeaker()
         {
@@ -30,6 +39,9 @@ namespace MunityNUnitTest.ListOfSpeakerTest
             Assert.Contains(speaker, instance.Speakers);
         }
 
+        /// <summary>
+        /// Test that calling the next speaker removes the speaker from the list.
+        /// </summary>
         [Test]
         public void TestNextSpeakerRemovesFromList()
         {
@@ -40,6 +52,9 @@ namespace MunityNUnitTest.ListOfSpeakerTest
 
         }
 
+        /// <summary>
+        /// Test that calling the next speaker sets the current speaker to the first speaker of the list.
+        /// </summary>
         [Test]
         public void TestNextSpeakerSetsCurrentSpeaker()
         {
@@ -49,7 +64,10 @@ namespace MunityNUnitTest.ListOfSpeakerTest
             Assert.AreEqual(speaker, instance.CurrentSpeaker);
         }
 
-
+        /// <summary>
+        /// Test that when a Next speaker is set the Reamining Speaker time whill reset.
+        /// In this case the list of speakers should be stopped and the SpeakerTime should be returned!
+        /// </summary>
         [Test]
         public void TestNextSpeakerSettingTime()
         {
@@ -61,6 +79,9 @@ namespace MunityNUnitTest.ListOfSpeakerTest
             Assert.IsTrue(instance.RemainingSpeakerTime.TotalSeconds >= 29 && instance.RemainingSpeakerTime.TotalSeconds < 31);
         }
 
+        /// <summary>
+        /// Test with a delay that the RemainingSpeakerTime is actually counting down.
+        /// </summary>
         [Test]
         public void TestSpeakerListSpeakerCountDown()
         {

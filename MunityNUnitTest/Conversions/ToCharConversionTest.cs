@@ -6,8 +6,14 @@ using MUNity.Extensions.Conversion;
 
 namespace MunityNUnitTest.Conversions
 {
+    /// <summary>
+    /// Tests for the index coverter.
+    /// </summary>
     public class ToCharConversionTest
     {
+        /// <summary>
+        /// Test that the index 0 returns a when converted to a Letter.
+        /// </summary>
         [Test]
         public void TestZeroReturnsA()
         {
@@ -16,6 +22,9 @@ namespace MunityNUnitTest.Conversions
             Assert.AreEqual("a", res);
         }
 
+        /// <summary>
+        /// Test that the index 25 (26 entry when starting at zero) returns the letter z
+        /// </summary>
         [Test]
         public void TestTwentyFiveIsZ()
         {
@@ -24,6 +33,9 @@ namespace MunityNUnitTest.Conversions
             Assert.AreEqual("z", res);
         }
 
+        /// <summary>
+        /// Test that the Index 26 (27th entry when starting at zero) returns the combination aa.
+        /// </summary>
         [Test]
         public void TestTwentySixIsAA()
         {
@@ -32,6 +44,9 @@ namespace MunityNUnitTest.Conversions
             Assert.AreEqual("aa", res);
         }
 
+        /// <summary>
+        /// Test that the Index 27 (28 entry when starting at zero) returns the combination ab.
+        /// </summary>
         [Test]
         public void TestTwentySevenIsAB()
         {
@@ -40,13 +55,6 @@ namespace MunityNUnitTest.Conversions
             Assert.AreEqual("ab", res);
         }
 
-        [Test]
-        public void TestLettersZeroToOneHundred()
-        {
-            for (int i=0;i<=100;i++)
-            {
-                Console.WriteLine($"{i}\t{i.ToLetter()}");
-            }
-        }
+       
     }
 }
