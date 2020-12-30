@@ -20,7 +20,7 @@ namespace MUNity.Models.Resolution
         /// </summary>
         public string OperativeParagraphId { get; set; }
 
-        private string _name;
+        private string _name = "";
         /// <summary>
         /// The name of the paragraph if you want to identify it by a given name.
         /// </summary>
@@ -61,7 +61,7 @@ namespace MUNity.Models.Resolution
             } 
         }
 
-        private string _text;
+        private string _text = "";
 
         
         /// <summary>
@@ -136,6 +136,7 @@ namespace MUNity.Models.Resolution
             this.Text = text;
             this.OperativeParagraphId = Guid.NewGuid().ToString();
             this.Children = new ObservableCollection<OperativeParagraph>();
+            this.Comments = new ObservableCollection<Comment>();
         }
     }
 }
