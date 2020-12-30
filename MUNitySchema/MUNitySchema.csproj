@@ -8,10 +8,10 @@
     <Copyright>Copyright 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/PeerConradi/munityData</RepositoryUrl>
-    <PackageReleaseNotes>Implemented INotifyPropertyChanged into the object Model and created Workers.</PackageReleaseNotes>
-    <AssemblyVersion>1.0.6.0</AssemblyVersion>
-    <FileVersion>1.0.6.0</FileVersion>
-    <Version>1.0.6</Version>
+    <PackageReleaseNotes>Implemented Troubleshooting for resolutions.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <FileVersion>1.0.7.0</FileVersion>
+    <Version>1.0.7</Version>
     <PackageId>MUNityBase</PackageId>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
