@@ -1,10 +1,10 @@
-﻿using MUNitySchema.Models.Resolution;
+﻿using MUNity.Models.Resolution;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MUNitySchema.Hubs
+namespace MUNity.Hubs
 {
 
     /// <summary>

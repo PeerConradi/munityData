@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MUNitySchema.Models.ListOfSpeakers;
+using MUNity.Models.ListOfSpeakers;
 using System.Linq;
-using static MUNitySchema.Models.ListOfSpeakers.ListOfSpeakers;
+using static MUNity.Models.ListOfSpeakers.ListOfSpeakers;
 
 namespace MUNity.Extensions.LoSExtensions
 {

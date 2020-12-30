@@ -1,11 +1,11 @@
-﻿using MUNitySchema.Schema.Simulation;
+﻿using MUNity.Schema.Simulation;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using static MUNitySchema.Schema.Simulation.SimulationEnums;
+using static MUNity.Schema.Simulation.SimulationEnums;
 
-namespace MUNitySchema.Hubs
+namespace MUNity.Hubs
 {
 
     /// <summary>

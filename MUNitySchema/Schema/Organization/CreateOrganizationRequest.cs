@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace MUNitySchema.Schema.Organization
+namespace MUNity.Schema.Organization
 {
     /// <summary>
     /// The request body to create an organization. Every project needs a hosting organization and

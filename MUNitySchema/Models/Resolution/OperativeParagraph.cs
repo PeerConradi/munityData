@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace MUNitySchema.Models.Resolution
+namespace MUNity.Models.Resolution
 {
 
     /// <summary>
@@ -14,40 +14,52 @@ namespace MUNitySchema.Models.Resolution
     /// </summary>
     public class OperativeParagraph : INotifyPropertyChanged
     {
-        /// <summary>
-        /// The Text of the Operative Paragraph has been changed.
-        /// </summary>
-        /// <param name="paragraph"></param>
-        /// <param name="newText"></param>
-        /// <param name="oldText"></param>
-        public delegate void TextChangedEventHandler(OperativeParagraph paragraph, string newText, string oldText);
-
-        /// <summary>
-        /// Event for text change of the paragraph.
-        /// </summary>
-        public event TextChangedEventHandler TextChanged;
 
         /// <summary>
         /// The Id of the operativee Paragraph.
         /// </summary>
         public string OperativeParagraphId { get; set; }
 
+        private string _name;
         /// <summary>
         /// The name of the paragraph if you want to identify it by a given name.
         /// </summary>
-        public string Name { get; set; } = "";
+        public string Name {
+            get => _name; 
+            set
+            {
+                _name = value;
+                NotifyPropertyChanged(nameof(Name));
+            }
+        }
 
+        private bool _isLocked = false;
         /// <summary>
         /// Is the paragraph marked as locked. This will not effect the logic you can still submit amendments
         /// or apply amendments to it. This may change in future implementations!
         /// </summary>
-        public bool IsLocked { get; set; } = false;
+        public bool IsLocked {
+            get => _isLocked; 
+            set
+            {
+                _isLocked = value;
+                NotifyPropertyChanged(nameof(IsLocked));
+            }
+        }
 
+        private bool _isVirtual = false;
         /// <summary>
         /// Virtual is true when the Operative Paragraph comes from an AddAmendment and doesn't really count as an
         /// paragraph or if it is from a move amendment and is the paragraph where the orignal should be moved to.
         /// </summary>
-        public bool IsVirtual { get; set; } = false;
+        public bool IsVirtual {
+            get => _isVirtual; 
+            set
+            {
+                _isVirtual = value;
+                NotifyPropertyChanged(nameof(IsVirtual));
+            } 
+        }
 
         private string _text;
 
@@ -64,21 +76,36 @@ namespace MUNitySchema.Models.Resolution
                 var oldText = this._text;
                 this._text = value;
                 this.NotifyPropertyChanged(nameof(Text));
-                this.TextChanged?.Invoke(this, value, oldText);
             }
         }
 
+        private bool _visible = true;
         /// <summary>
         /// Is the operative Paragraph visible inside the views.
         /// </summary>
-        public bool Visible { get; set; } = true;
+        public bool Visible {
+            get => _visible; 
+            set
+            {
+                _visible = value;
+                NotifyPropertyChanged(nameof(Visible));
+            }
+        }
 
+        private bool _corrected = false;
         /// <summary>
         /// Is the operative paragraph marked as corrected. Note that this
         /// does not interact with any form of logic, if the Text is changed it will
         /// still be marked as corrected.
         /// </summary>
-        public bool Corrected { get; set; }
+        public bool Corrected {
+            get => _corrected; 
+            set
+            {
+                _corrected = value;
+                NotifyPropertyChanged(nameof(Corrected));
+            }
+        }
 
         /// <summary>
         /// Child paragraphs of this operative paragraph.

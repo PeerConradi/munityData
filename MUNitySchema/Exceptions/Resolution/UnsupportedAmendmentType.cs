@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MUNitySchema.Exceptions.Resolution
+namespace MUNity.Exceptions.Resolution
 {
 
     /// <summary>

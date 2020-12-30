@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using static MUNitySchema.Schema.Simulation.SimulationEnums;
+using static MUNity.Schema.Simulation.SimulationEnums;
 
-namespace MUNitySchema.Schema.Simulation
+namespace MUNity.Schema.Simulation
 {
     /// <summary>
     /// The schema you will get when asking for a simulation with a valid token.

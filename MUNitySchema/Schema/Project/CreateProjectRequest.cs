@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace MUNitySchema.Schema.Project
+namespace MUNity.Schema.Project
 {
 
     /// <summary>

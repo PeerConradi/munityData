@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using System.Text;
 using MUNity.Extensions.ResolutionExtensions;
 
-namespace MUNitySchema.Models.Resolution
+namespace MUNity.Models.Resolution
 {
     /// <summary>
     /// An Amendment to move an operative paragraph to a new position.
     /// </summary>
     public class MoveAmendment : AbstractAmendment
     {
+
+        private string _newTargetSectionId;
         /// <summary>
         /// The Id of the virtual paragraph that represents the new position of the operative paragraph.
         /// </summary>
-        public string NewTargetSectionId { get; set; }
+        public string NewTargetSectionId {
+            get => _newTargetSectionId; 
+            set
+            {
+                _newTargetSectionId = value;
+                NotifyPropertyChanged(nameof(NewTargetSectionId));
+            }
+        }
 
         /// <summary>
         /// Will delete the opld amendment and move all its settings to the currently virtual paragraph.

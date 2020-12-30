@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace MUNitySchema.Schema.Simulation
+namespace MUNity.Schema.Simulation
 {
     /// <summary>
     /// The body of a join request.

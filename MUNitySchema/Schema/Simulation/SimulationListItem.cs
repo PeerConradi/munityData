@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using static MUNitySchema.Schema.Simulation.SimulationEnums;
+using static MUNity.Schema.Simulation.SimulationEnums;
 
-namespace MUNitySchema.Schema.Simulation
+namespace MUNity.Schema.Simulation
 {
     /// <summary>
     /// The schema the API will give you when asking for a lis of simulations.

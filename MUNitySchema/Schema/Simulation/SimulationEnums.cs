@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MUNitySchema.Schema.Simulation
+namespace MUNity.Schema.Simulation
 {
     /// <summary>
     /// A wrapper class containing the enums used by the simulation.

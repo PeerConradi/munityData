@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MUNity.Extensions.ResolutionExtensions;
 
-namespace MUNitySchema.Models.Resolution
+namespace MUNity.Models.Resolution
 {
     /// <summary>
     /// An Add Amendment is a type of amendment that is creating a new Operative Paragraph on a given position when accpeted.

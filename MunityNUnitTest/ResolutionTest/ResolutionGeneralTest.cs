@@ -1,4 +1,4 @@
-﻿using MUNitySchema.Models.Resolution;
+﻿using MUNity.Models.Resolution;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

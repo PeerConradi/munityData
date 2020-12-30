@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MUNitySchema.Schema.User
+namespace MUNity.Schema.User
 {
     /// <summary>
     /// The auth Schema of a MUNity User.

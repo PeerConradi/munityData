@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MUNitySchema.Schema.Conference
+namespace MUNity.Schema.Conference
 {
     /// <summary>
     /// The Body of a request to change the short name (abbreviation) of a conference.

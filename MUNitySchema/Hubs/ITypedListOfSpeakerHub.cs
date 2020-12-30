@@ -1,10 +1,10 @@
-﻿using MUNitySchema.Models.ListOfSpeakers;
+﻿using MUNity.Models.ListOfSpeakers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MUNitySchema.Hubs
+namespace MUNity.Hubs
 {
 
     /// <summary>

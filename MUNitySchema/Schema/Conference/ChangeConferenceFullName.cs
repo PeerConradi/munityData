@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MUNitySchema.Schema.Conference
+namespace MUNity.Schema.Conference
 {
     /// <summary>
     /// A request body to change the long name (full name) of a conference.

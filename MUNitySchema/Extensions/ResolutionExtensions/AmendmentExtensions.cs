@@ -1,8 +1,9 @@
-﻿using MUNitySchema.Models.Resolution;
+﻿using MUNity.Models.Resolution;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using MUNity.Extensions.ObservableCollectionExtensions;
 
 namespace MUNity.Extensions.ResolutionExtensions
 {
@@ -39,7 +40,7 @@ namespace MUNity.Extensions.ResolutionExtensions
             // For now every Amendment has a TargetSectionId this could maybe be different one day
             // Remember to move this function if this day ever comes.
             if (section.FirstOrDefault(n => n.OperativeParagraphId == amendment.TargetSectionId) == null)
-                throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException();
+                throw new MUNity.Exceptions.Resolution.OperativeParagraphNotFoundException();
 
             if (amendment is AddAmendment addAmendment)
             {
@@ -59,7 +60,7 @@ namespace MUNity.Extensions.ResolutionExtensions
             }
             else
             {
-                throw new MUNitySchema.Exceptions.Resolution.UnsupportedAmendmentTypeException();
+                throw new MUNity.Exceptions.Resolution.UnsupportedAmendmentTypeException();
             }
         }
 
@@ -91,7 +92,7 @@ namespace MUNity.Extensions.ResolutionExtensions
             }
             else
             {
-                throw new MUNitySchema.Exceptions.Resolution.UnsupportedAmendmentTypeException();
+                throw new MUNity.Exceptions.Resolution.UnsupportedAmendmentTypeException();
             }
         }
 
@@ -104,7 +105,7 @@ namespace MUNity.Extensions.ResolutionExtensions
         public static DeleteAmendment CreateDeleteAmendment(this OperativeSection section, string paragraphId)
         {
             if (section.FindOperativeParagraph(paragraphId) == null)
-                throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException();
+                throw new MUNity.Exceptions.Resolution.OperativeParagraphNotFoundException();
 
             DeleteAmendment newAmendment = new DeleteAmendment
             {
@@ -124,7 +125,7 @@ namespace MUNity.Extensions.ResolutionExtensions
         public static ChangeAmendment CreateChangeAmendment(this OperativeSection section, string paragraphId, string newText = "")
         {
             if (section.FindOperativeParagraph(paragraphId) == null)
-                throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException();
+                throw new MUNity.Exceptions.Resolution.OperativeParagraphNotFoundException();
 
             var newAmendment = new ChangeAmendment
             {
@@ -150,7 +151,7 @@ namespace MUNity.Extensions.ResolutionExtensions
         {
             var sourceParagraph = section.FindOperativeParagraph(paragraphId);
             if (sourceParagraph == null)
-                throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException();
+                throw new MUNity.Exceptions.Resolution.OperativeParagraphNotFoundException();
 
             var newAmendment = new MoveAmendment
             {

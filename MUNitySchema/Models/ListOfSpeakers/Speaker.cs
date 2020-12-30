@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MUNitySchema.Models.ListOfSpeakers
+namespace MUNity.Models.ListOfSpeakers
 {
 
     /// <summary>

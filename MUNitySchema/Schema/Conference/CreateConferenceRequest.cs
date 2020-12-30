@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace MUNitySchema.Schema.Conference
+namespace MUNity.Schema.Conference
 {
     /// <summary>
     /// The request body to create a new conference.

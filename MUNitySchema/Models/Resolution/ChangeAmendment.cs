@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using System.Text;
 using MUNity.Extensions.ResolutionExtensions;
 
-namespace MUNitySchema.Models.Resolution
+namespace MUNity.Models.Resolution
 {
     /// <summary>
     /// An Amendment to create the Text of an operative paragraph.
     /// </summary>
     public class ChangeAmendment : AbstractAmendment
     {
+        private string _newText = "";
         /// <summary>
         /// The Text that the operative Paragraph should be changed to.
         /// </summary>
-        public string NewText { get; set; }
+        public string NewText {
+            get => _newText;
+            set
+            {
+                _newText = value;
+                NotifyPropertyChanged(nameof(NewText));
+            } 
+        }
 
         /// <summary>
         /// Changes the text and removes the amendment.

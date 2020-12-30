@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MUNitySchema.Schema.Authentication
+namespace MUNity.Schema.Authentication
 {
     /// <summary>
     /// The authentication response sent by the MUNity API when the login was successful or when you validate

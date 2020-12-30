@@ -1,4 +1,4 @@
-﻿using MUNitySchema.Models.ListOfSpeakers;
+﻿using MUNity.Models.ListOfSpeakers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

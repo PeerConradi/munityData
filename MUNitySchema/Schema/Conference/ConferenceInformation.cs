@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MUNitySchema.Schema.Conference
+namespace MUNity.Schema.Conference
 {
     /// <summary>
     /// A schema the MUNityAPI will give you when requesting information about a conference.

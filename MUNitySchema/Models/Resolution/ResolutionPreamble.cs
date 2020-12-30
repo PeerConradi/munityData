@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 
-namespace MUNitySchema.Models.Resolution
+namespace MUNity.Models.Resolution
 {
     /// <summary>
     /// The preamble of a resolution containing a list of paragraphs.

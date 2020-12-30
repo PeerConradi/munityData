@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace MUNitySchema.Schema.Authentication
+namespace MUNity.Schema.Authentication
 {
     /// <summary>
     /// The full request to create a new account at the munity API. Note that this will be reworked to

@@ -1,5 +1,5 @@
 ﻿using MUNity.Extensions.Conversion;
-using MUNitySchema.Models.Resolution;
+using MUNity.Models.Resolution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -135,7 +135,7 @@ namespace MUNity.Extensions.ResolutionExtensions
         {
             var parentParagraph = section.FindOperativeParagraph(parentId);
             if (parentParagraph == null)
-                throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException();
+                throw new MUNity.Exceptions.Resolution.OperativeParagraphNotFoundException();
 
             var newParagraph = new OperativeParagraph
             {
@@ -229,7 +229,7 @@ namespace MUNity.Extensions.ResolutionExtensions
         {
             var path = section.GetOperativeParagraphPath(paragraph.OperativeParagraphId);
             if (!path.Any())
-                throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException();
+                throw new MUNity.Exceptions.Resolution.OperativeParagraphNotFoundException();
             if (path.Count == 1)
             {
                 section.Paragraphs.Remove(paragraph);
@@ -312,7 +312,7 @@ namespace MUNity.Extensions.ResolutionExtensions
             else
             {
                 if (section.FindOperativeParagraph(parentParagraph.OperativeParagraphId) == null)
-                    throw new MUNitySchema.Exceptions.Resolution.OperativeParagraphNotFoundException("Target parent Paragraph not found in this Resolution");
+                    throw new MUNity.Exceptions.Resolution.OperativeParagraphNotFoundException("Target parent Paragraph not found in this Resolution");
 
                 parentParagraph.Children.Insert(targetIndex, paragraph);
             }
@@ -371,7 +371,10 @@ namespace MUNity.Extensions.ResolutionExtensions
         {
             var list = new List<string>();
             list.AddRange(section.Paragraphs.Select(n => n.OperativeParagraphId));
-            section.Paragraphs.ForEach(n => AddAllChildrenRecursive(n, list));
+            foreach(var paragraph in section.Paragraphs)
+            {
+                AddAllChildrenRecursive(paragraph, list);
+            }
             return list;
         }
 
@@ -385,7 +388,10 @@ namespace MUNity.Extensions.ResolutionExtensions
         {
             var list = new List<OperativeParagraph>();
             list.AddRange(operativeSection.Paragraphs.Where(predicate));
-            operativeSection.Paragraphs.ForEach(n => DeepWhere(n, predicate, list));
+            foreach(var paragraph in operativeSection.Paragraphs)
+            {
+                DeepWhere(paragraph, predicate, list);
+            }
             return list;
         }
 

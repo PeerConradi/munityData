@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace MUNitySchema.Models.Resolution
+namespace MUNity.Models.Resolution
 {
 
     /// <summary>

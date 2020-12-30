@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using MUNity.Extensions.ResolutionExtensions;
+using MUNity.Extensions.ObservableCollectionExtensions;
 
-namespace MUNitySchema.Models.Resolution
+namespace MUNity.Models.Resolution
 {
 
     /// <summary>

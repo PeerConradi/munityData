@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MUNitySchema.Schema.Project
+namespace MUNity.Schema.Project
 {
     /// <summary>
     /// The basic schema the MUNityAPI will sent when requestiong information about a project.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MUNitySchema.Schema.Organization
+namespace MUNity.Schema.Organization
 {
     /// <summary>
     /// The base model you will get by the MUNity API when requestiong an organization.

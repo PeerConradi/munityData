@@ -1,4 +1,4 @@
-﻿using MUNitySchema.Models.Resolution;
+﻿using MUNity.Models.Resolution;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,13 +15,17 @@ namespace MUNity.Extensions.ResolutionExtensions
         /// Creates a new preamble paragraph.
         /// </summary>
         /// <param name="resolution"></param>
+        /// <param name="text">The new Text of the added paragraph</param>
         /// <returns></returns>
-        public static PreambleParagraph CreatePreambleParagraph(this Resolution resolution)
+        public static PreambleParagraph CreatePreambleParagraph(this Resolution resolution, string text = "")
         {
             var paragraph = new PreambleParagraph();
+            paragraph.Text = text;
             resolution.Preamble.Paragraphs.Add(paragraph);
             return paragraph;
         }
+
+
 
         /// <summary>
         /// Checks if the opertor is valid.

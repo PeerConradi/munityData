@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MUNitySchema.Schema.User
+namespace MUNity.Schema.User
 {
     /// <summary>
     /// Returns base information about a user. This schema can be different depending on the privacy settings of the user.
