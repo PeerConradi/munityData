@@ -135,7 +135,65 @@ namespace MunityNUnitTest.ResolutionWorkerTest
             Assert.IsTrue(wasRaised);
         }
 
+        [Test]
+        public void ChangeCalledOnNewAddAmendment()
+        {
+            var resolution = new Resolution();
+            bool wasRaised = false;
+            var worker = new MUNity.ServiceWorkers.ResolutionWorker(resolution);
+            worker.ResolutionChanged += delegate { wasRaised = true; };
+            resolution.OperativeSection.CreateAddAmendment(0, "");
+            Assert.IsTrue(wasRaised);
+        }
 
+        [Test]
+        public void ChangeCalledOnNewAddAmendmentInSub()
+        {
+            var resolution = new Resolution();
+            var paragraph = resolution.OperativeSection.CreateOperativeParagraph("Paragraph Head");
+            bool wasRaised = false;
+            var worker = new MUNity.ServiceWorkers.ResolutionWorker(resolution);
+            worker.ResolutionChanged += delegate { wasRaised = true; };
+            resolution.OperativeSection.CreateAddAmendment(0, "", paragraph);
+            Assert.IsTrue(wasRaised);
+        }
+
+        [Test]
+        public void ChangeCalledOnNewDeleteAmendment()
+        {
+            var resolution = new Resolution();
+            var paragraph = resolution.OperativeSection.CreateOperativeParagraph("Paragraph One");
+            bool wasRaised = false;
+            var worker = new MUNity.ServiceWorkers.ResolutionWorker(resolution);
+            worker.ResolutionChanged += delegate { wasRaised = true; };
+            resolution.OperativeSection.CreateChangeAmendment(paragraph, "New Text");
+            Assert.IsTrue(wasRaised);
+        }
+
+        [Test]
+        public void ChangeCalledOnNewMoveAmendment()
+        {
+            var resolution = new Resolution();
+            var paragraphOne = resolution.OperativeSection.CreateOperativeParagraph("Paragraph One");
+            var paragraphTwo = resolution.OperativeSection.CreateOperativeParagraph("Paragraph One");
+            bool wasRaised = false;
+            var worker = new MUNity.ServiceWorkers.ResolutionWorker(resolution);
+            worker.ResolutionChanged += delegate { wasRaised = true; };
+            resolution.OperativeSection.CreateMoveAmendment(paragraphOne, 1);
+            Assert.IsTrue(wasRaised);
+        }
+
+        [Test]
+        public void ChangeCalledOnNewChangeAmendment()
+        {
+            var resolution = new Resolution();
+            var paragraphOne = resolution.OperativeSection.CreateOperativeParagraph("Paragraph One");
+            bool wasRaised = false;
+            var worker = new MUNity.ServiceWorkers.ResolutionWorker(resolution);
+            worker.ResolutionChanged += delegate { wasRaised = true; };
+            resolution.OperativeSection.CreateChangeAmendment(paragraphOne, "New Text");
+            Assert.IsTrue(wasRaised);
+        }
 
     }
 }

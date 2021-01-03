@@ -15,7 +15,7 @@ namespace MUNity.Models.Resolution
         /// <summary>
         /// The Id of the comment
         /// </summary>
-        public string Id { get; set; }
+        public string CommentId { get; set; }
 
         private string _authorName = "";
         /// <summary>
@@ -97,7 +97,7 @@ namespace MUNity.Models.Resolution
         /// </summary>
         public Comment()
         {
-            Id = Guid.NewGuid().ToString();
+            CommentId = Guid.NewGuid().ToString();
             Tags = new ObservableCollection<CommentTag>();
             ReadBy = new ObservableCollection<string>();
         }

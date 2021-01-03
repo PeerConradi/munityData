@@ -93,5 +93,12 @@ namespace MunityNUnitTest.ListOfSpeakerTest
             System.Threading.Thread.Sleep(5000);
             Assert.IsTrue(instance.RemainingSpeakerTime.TotalSeconds >= 24 && instance.RemainingSpeakerTime.TotalSeconds < 25);
         }
+
+        [Test]
+        public void TestAddQuestion()
+        {
+            var myListOfSpeakers = new ListOfSpeakers();
+            var question = myListOfSpeakers.AddQuestion("Question 1");
+        }
     }
 }

@@ -501,5 +501,80 @@ namespace MUNity.Extensions.ResolutionExtensions
             }
         }
         #endregion
+
+        /// <summary>
+        /// Returns a Flat List of all the Operative Paragraphs in one Level, meaning all Child Paragraphs will also
+        /// be part of this list!
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        public static List<OperativeParagraph> GetAllParagraphs(this OperativeSection section)
+        {
+            var list = new List<OperativeParagraph>();
+            foreach(var paragraph in section.Paragraphs)
+            {
+                TraverseParagraph(paragraph, list);
+            }
+            return list;
+        }
+
+        private static void TraverseParagraph(OperativeParagraph paragraph, List<OperativeParagraph> targetList)
+        {
+            targetList.Add(paragraph);
+            if (paragraph.Children != null && paragraph.Children.Any())
+            {
+                targetList.AddRange(paragraph.Children);
+                foreach(var child in paragraph.Children)
+                {
+                    TraverseParagraph(child, targetList);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns all Amendments in order of
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        public static IEnumerable<AbstractAmendment> GetOrderedAmendments(this OperativeSection section)
+        {
+            var list = new List<AbstractAmendment>();
+            var allParagraphs = section.GetAllParagraphs();
+            foreach (var paragraph in allParagraphs)
+            {
+                var deleteAmendments = section.DeleteAmendments.Where(n => n.TargetSectionId ==
+                paragraph.OperativeParagraphId);
+                if (deleteAmendments.Any())
+                    list.AddRange(deleteAmendments);
+
+                var changeAmendments = section.ChangeAmendments.Where(n => n.TargetSectionId ==
+                paragraph.OperativeParagraphId);
+                if (changeAmendments.Any())
+                    list.AddRange(changeAmendments);
+
+                var moveAmendments = section.MoveAmendments.Where(n => n.TargetSectionId ==
+                paragraph.OperativeParagraphId);
+                if (moveAmendments.Any())
+                    list.AddRange(moveAmendments);
+            }
+
+            list.AddRange(section.AddAmendments);
+            allParagraphs.Clear();
+            return list;
+        }
+
+        /// <summary>
+        /// Returns all Amendments starting with the Add Amendments then ChangeAmendments, DeleteAmendments and MoveAmendments
+        /// </summary>
+        /// <param name="section"></param>
+        /// <returns></returns>
+        public static IEnumerable<AbstractAmendment> GetAllAmendments(this OperativeSection section)
+        {
+            
+            return section.AddAmendments
+                .Union<AbstractAmendment>(section.ChangeAmendments)
+                .Union(section.DeleteAmendments)
+                .Union(section.MoveAmendments);
+        }
     }
 }

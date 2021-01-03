@@ -10,6 +10,13 @@ namespace MUNity.Schema.Simulation
     /// </summary>
     public class JoinAuthenticate
     {
+        [Required]
+        public int SimulationId { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string UserId { get; set; }
+
         /// <summary>
         /// The password of the simulation you want to enter.
         /// </summary>
@@ -20,7 +27,6 @@ namespace MUNity.Schema.Simulation
         /// The display name you want to enter with.
         /// </summary>
         [MaxLength(50)]
-        [Required]
         public string DisplayName { get; set; }
     }
 }

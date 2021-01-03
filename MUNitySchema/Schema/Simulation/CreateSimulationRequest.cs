@@ -17,12 +17,6 @@ namespace MUNity.Schema.Simulation
         public string Name { get; set; }
 
         /// <summary>
-        /// a password used by the users to join the simulation. If this property is null there will
-        /// not be used any password.
-        /// </summary>
-        public string Password { get; set; }
-
-        /// <summary>
         /// The password for administration. This password will be asked if someone who is not the owner
         /// of the simulation will need to enter to change the settings.
         /// </summary>
