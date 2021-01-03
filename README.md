@@ -15,22 +15,6 @@ You can simply install this package with:
 PM> Add-Package MUNityBase
 ```
 
-## Use the List of Speakers
+## Documentation
 
-```C#
-#using MUNity.Extensions.LoSExtensions;     // For the functionality
-#using MUNitySchema.Models.ListOfSpeakers;  // For the general object Structure
-```
-
-The base logic could be like this:
-```C#
-var listOfSpeakers = new ListOfSpeakers();
-listOfSpeakers.AddSpeaker("Germany", "de");
-listOfSpeakers.AddSpeaker("France", "fr");
-// Add this point Speakers will contain: Germany and France.
-listOfSpeakers.NextSpeaker();
-// Now the Speakers will only contain France the CurrentSpeaker will be Germany.
-listOfSpeakers.StartSpeaker();
-// This will start the Speaker list. The RemainingSpeakerTime will now change every
-// time you call it.
-```
+You can find some documentation inside the [Wiki](https://github.com/PeerConradi/munityData/wiki).
