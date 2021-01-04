@@ -28,11 +28,11 @@ namespace MUNity.Schema.Simulation
         /// <summary>
         /// The roles of the simulation.
         /// </summary>
-        public IEnumerable<SimulationRoleItem> Roles { get; set; }
+        public List<SimulationRoleItem> Roles { get; set; }
 
         /// <summary>
         /// The users of the simulation.
         /// </summary>
-        public IEnumerable<SimulationUserItem> Users { get; set; }
+        public List<SimulationUserItem> Users { get; set; }
     }
 }

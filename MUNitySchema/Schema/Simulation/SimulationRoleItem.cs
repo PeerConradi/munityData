@@ -34,6 +34,6 @@ namespace MUNity.Schema.Simulation
         /// <summary>
         /// Display Names of users that have taking this role.
         /// </summary>
-        public IEnumerable<string> Users { get; set; }
+        public List<string> Users { get; set; }
     }
 }
