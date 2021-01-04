@@ -23,5 +23,10 @@ namespace MUNity.Schema.Simulation
         /// The current role this user has picked.
         /// </summary>
         public int RoleId { get; set; }
+
+        /// <summary>
+        /// Returns of the user is connected or not. This is known if there is an active Hub Connection.
+        /// </summary>
+        public bool IsOnline { get; set; }
     }
 }
