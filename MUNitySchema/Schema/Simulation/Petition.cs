@@ -5,13 +5,16 @@ using System.Text;
 
 namespace MUNity.Schema.Simulation
 {
-    public class MakeProposal : SimulationRequest
+    /// <summary>
+    /// Users inside the Simulation can make Petition that can be accepted or denied by the Leader.
+    /// </summary>
+    public class Petition : SimulationRequest
     {
         /// <summary>
         /// ProposalTypes will be reworked for other conferences that are not dmun conferences.
-        /// For now you make this working with DMUN Conferences MUN-SH and MUNBW
+        /// For now you make this working with DMUN Conferences MUN-SH and MUNBW.
         /// </summary>
-        public enum ProposalTypes
+        public enum PetitionTypes
         {
             /// <summary>
             /// Persönlicher Antrag für Recht auf Information. Kann nurch NA gestellt werden
@@ -54,9 +57,13 @@ namespace MUNity.Schema.Simulation
             GOGastredner
         }
 
+        public string PetitionId { get; set; }
+
         [Required]
-        public ProposalTypes ProposalType { get; set; }
+        public PetitionTypes PetitionType { get; set; }
 
         public string Text { get; set; }
+
+        public DateTime PetitionDate { get; set; }
     }
 }
