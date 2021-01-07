@@ -100,5 +100,19 @@ namespace MUNity.Hubs
         /// <param name="petition"></param>
         /// <returns></returns>
         Task UserPetitionDeleted(Petition petition);
+
+        /// <summary>
+        /// Gets called when the list of speakers has changed and will send the id of the new List of speakers.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task ListOfSpeakerChanged(string id);
+
+        /// <summary>
+        /// Gets called when the current Resolution has changed and will return the Id of the new resolution
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task ResolutionChanged(string id);
     }
 }

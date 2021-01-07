@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 
 namespace MUNity.Models.ListOfSpeakers
@@ -32,7 +33,7 @@ namespace MUNity.Models.ListOfSpeakers
     /// </code>
     /// <seealso cref="MUNity.Extensions.LoSExtensions"/>
     /// </summary>
-    public class ListOfSpeakers
+    public class ListOfSpeakers : INotifyPropertyChanged
     {
         /// <summary>
         /// Possible states that can be used within a list of Speakers.
@@ -75,43 +76,127 @@ namespace MUNity.Models.ListOfSpeakers
         /// </summary>
         public string ListOfSpeakersId { get; set; }
 
+        private string _publicId;
         /// <summary>
         /// A public Id for example a code that you can give out to others to be able to read the List of Speakers
         /// to be able to read but not interact with it. Note that the MUNityBase does not have a logic for this
         /// and it will be implemented in the API.
         /// </summary>
-        public string PublicId { get; set; }
+        public string PublicId 
+        {
+            get => _publicId; 
+            set
+            {
+                if (value != this._publicId)
+                {
+                    this._publicId = value;
+                    NotifyPropertyChanged(nameof(PublicId));
+                }
+            } 
+        }
 
+        private string _name;
         /// <summary>
         /// A Name of a list of Speakers. That can be displayed. The Name is not used to identify the list, to identitfy the list use
         /// the ListOfSpeakersId.
         /// </summary>
-        public string Name { get; set; }
+        public string Name 
+        {
+            get => _name; 
+            set
+            {
+                if (this._name != value)
+                {
+                    this._name = value;
+                    NotifyPropertyChanged(nameof(Name));
+                }
+            }
+        }
 
+        private EStatus _status;
         /// <summary>
         /// The Current Status of the list, is someone talking, paused or is the List reset to default.
         /// </summary>
-        public EStatus Status { get; set; }
+        public EStatus Status 
+        {
+            get => _status;
+            set
+            {
+                if (_status != value)
+                {
+                    _status = value;
+                    NotifyPropertyChanged(nameof(Status));
+                }
+            }
+        }
 
+        private TimeSpan _speakerTime;
         /// <summary>
         /// The time that the Speakers are allowed to talk.
         /// </summary>
-        public TimeSpan SpeakerTime { get; set; }
+        public TimeSpan SpeakerTime 
+        {
+            get => _speakerTime;
+            set
+            {
+                if (_speakerTime != value)
+                {
+                    _speakerTime = value;
+                    NotifyPropertyChanged(nameof(SpeakerTime));
+                }
+            }
+        }
 
+        private TimeSpan _questionTime;
         /// <summary>
         /// The time that someone asking a question is allowed to talk and also how long the Speaker is allowed to answer a question.
         /// </summary>
-        public TimeSpan QuestionTime { get; set; }
+        public TimeSpan QuestionTime 
+        {
+            get => _questionTime;
+            set
+            {
+                if (_questionTime != value)
+                {
+                    _questionTime = value;
+                    NotifyPropertyChanged(nameof(QuestionTime));
+                }
+            }
+        }
 
+        private TimeSpan _pausedSpeakerTime;
         /// <summary>
         /// The Remaining Time that a Speaker had when he/she had been paused.
         /// </summary>
-        public TimeSpan PausedSpeakerTime { get; set; }
+        public TimeSpan PausedSpeakerTime 
+        {
+            get => _pausedSpeakerTime;
+            set
+            {
+                if (_pausedSpeakerTime != value)
+                {
+                    _pausedSpeakerTime = value;
+                    NotifyPropertyChanged(nameof(PausedSpeakerTime));
+                }
+            }
+        }
 
+        private TimeSpan _pausedQuestionTime;
         /// <summary>
         /// The Remaining Time that a speaker had when he/she had been paused.
         /// </summary>
-        public TimeSpan PausedQuestionTime { get; set; }
+        public TimeSpan PausedQuestionTime 
+        {
+            get => _pausedQuestionTime;
+            set
+            {
+                if (_pausedQuestionTime != value)
+                {
+                    _pausedQuestionTime = value;
+                    NotifyPropertyChanged(nameof(_pausedQuestionTime));
+                }
+            }
+        }
 
         /// <summary>
         /// Gives you the Remaining time a speaker had at the moment you call this Getter.
@@ -167,40 +252,111 @@ namespace MUNity.Models.ListOfSpeakers
         /// </summary>
         public ObservableCollection<Speaker> Questions { get; set; } = new ObservableCollection<Speaker>();
 
+        private Speaker _speaker;
         /// <summary>
         /// The person currently speaking or waiting to answer a question.
         /// </summary>
-        public Speaker CurrentSpeaker { get; set; }
+        public Speaker CurrentSpeaker 
+        {
+            get => _speaker;
+            set
+            {
+                if (_speaker != value)
+                {
+                    this._speaker = value;
+                    NotifyPropertyChanged(nameof(CurrentSpeaker));
+                }
+            }
+        }
 
+        private Speaker _currentQuestion;
         /// <summary>
         /// The person currently asking a question.
         /// </summary>
-        public Speaker CurrentQuestion { get; set; }
+        public Speaker CurrentQuestion {
+            get => _currentQuestion;
+            set
+            {
+                if (_currentQuestion != value)
+                {
+                    _currentQuestion = value;
+                    NotifyPropertyChanged(nameof(CurrentQuestion));
+                }
+            }
+        }
 
+        private bool _listClosed = false;
         /// <summary>
         /// Is the List of Speakers closed. If this is true you should not add people to the Speakers.
         /// This will not be catched when calling Speakers.Add()/AddSpeaker("",""). This is more for visual
         /// feedback of a closed List.
         /// </summary>
-        public bool ListClosed { get; set; } = false;
+        public bool ListClosed 
+        {
+            get => _listClosed;
+            set
+            {
+                if (_listClosed != value)
+                {
+                    _listClosed = value;
+                    NotifyPropertyChanged(nameof(ListClosed));
+                }
+            }
+        }
 
+        private bool _questionsClosed = false;
         /// <summary>
         /// Are people allowed to get on the List of questions. This is only for visual feedback, you can
         /// technacally still add people to the list.
         /// </summary>
-        public bool QuestionsClosed { get; set; } = false;
+        public bool QuestionsClosed 
+        {
+            get => _questionsClosed;
+            set
+            {
+                if (_questionsClosed != value)
+                {
+                    _questionsClosed = value;
+                    NotifyPropertyChanged(nameof(QuestionsClosed));
+                }
+            }
+        }
 
+        private DateTime _startSpeakerTime;
         /// <summary>
         /// The time when to speaker started talking. With the diff between the StartTime and the SpeakerTime the 
         /// RemainingSpeakerTime will be calculated.
         /// </summary>
-        public DateTime StartSpeakerTime { get; set; }
+        public DateTime StartSpeakerTime 
+        {
+            get => _startSpeakerTime;
+            set
+            {
+                if (_startSpeakerTime != value)
+                {
+                    _startSpeakerTime = value;
+                    NotifyPropertyChanged(nameof(StartSpeakerTime));
+                }
+            }
+        }
 
+        private DateTime _startQuestionTime;
         /// <summary>
         /// The time when the question started beeing asked. WIth the diff between this and the QuestionTime the
         /// RaminingQuestionTime will be calculated.
         /// </summary>
-        public DateTime StartQuestionTime { get; set; }
+        public DateTime StartQuestionTime 
+        {
+            get => _startQuestionTime;
+            set
+            {
+                if (_startQuestionTime != value)
+                {
+                    _startQuestionTime = value;
+                    NotifyPropertyChanged(nameof(StartQuestionTime));
+                }
+            }
+        }
 
         /// <summary>
         /// Will create a new ListOfSpeakers and generate a new GUID for it, will also init the Speakers and Questions
@@ -215,6 +371,15 @@ namespace MUNity.Models.ListOfSpeakers
             this.QuestionTime = new TimeSpan(0, 0, 30);
             this.PausedSpeakerTime = this.SpeakerTime;
             this.PausedQuestionTime = this.QuestionTime;
+        }
+
+        /// <summary>
+        /// Gets called when a property inside the ListOfSpeakers has changed. This does not include the ListOfSpeakersId and the Speakers/Questions.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }
