@@ -83,28 +83,22 @@ namespace MUNity.Hubs
         /// <summary>
         /// A user has filed a request.
         /// </summary>
-        /// <param name="simulationId"></param>
-        /// <param name="userId"></param>
         /// <param name="petition"></param>
         /// <returns></returns>
-        Task UserPetition(int simulationId, int userId, Petition petition);
+        Task UserPetition(Petition petition);
 
         /// <summary>
         /// The request of a user has beed accepted.
         /// </summary>
-        /// <param name="simulationId"></param>
-        /// <param name="userId"></param>
         /// <param name="petition"></param>
         /// <returns></returns>
-        Task UserPetitionAccepted(int simulationId, int userId, Petition petition);
+        Task UserPetitionAccepted(Petition petition);
 
         /// <summary>
         /// the request of a user has been deleted or decliened.
         /// </summary>
-        /// <param name="simulationId"></param>
-        /// <param name="userId"></param>
         /// <param name="petition"></param>
         /// <returns></returns>
-        Task UserPetitionDeleted(int simulationId, int userId, Petition petition);
+        Task UserPetitionDeleted(Petition petition);
     }
 }
