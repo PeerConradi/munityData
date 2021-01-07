@@ -8,10 +8,10 @@
     <Copyright>Copyright 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/PeerConradi/munityData</RepositoryUrl>
-    <PackageReleaseNotes>Added SimulationId Property into Petition</PackageReleaseNotes>
-    <AssemblyVersion>1.0.13.0</AssemblyVersion>
-    <FileVersion>1.0.13.0</FileVersion>
-    <Version>1.0.13</Version>
+    <PackageReleaseNotes>Reorganized Petition</PackageReleaseNotes>
+    <AssemblyVersion>1.0.14.0</AssemblyVersion>
+    <FileVersion>1.0.14.0</FileVersion>
+    <Version>1.0.14</Version>
     <PackageId>MUNityBase</PackageId>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
