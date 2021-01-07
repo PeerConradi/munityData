@@ -65,5 +65,22 @@ namespace MUNity.Schema.Simulation
         public string Text { get; set; }
 
         public DateTime PetitionDate { get; set; }
+
+        public int SimulationId { get; set; }
+
+        public Petition(int simulationId)
+        {
+            this.PetitionId = Guid.NewGuid().ToString();
+            this.Text = "";
+            this.PetitionDate = DateTime.Now;
+            this.SimulationId = simulationId;
+        }
+
+        public Petition()
+        {
+            this.PetitionId = Guid.NewGuid().ToString();
+            this.Text = "";
+            this.PetitionDate = DateTime.Now;
+        }
     }
 }
