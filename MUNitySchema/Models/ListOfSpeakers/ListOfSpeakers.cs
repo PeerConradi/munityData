@@ -222,7 +222,7 @@ namespace MUNity.Models.ListOfSpeakers
                 else if (Status == EStatus.Speaking)
                 {
                     var finishTime = StartSpeakerTime.AddSeconds(SpeakerTime.TotalSeconds);
-                    return finishTime - DateTime.Now;
+                    return finishTime - DateTime.Now.ToUniversalTime();
                     // Startzeitpunkt                 Startzeitpunkt + Speakertime
                     //       |---------------|<-------->|
                     //                          Verbleibende Zeit
@@ -247,7 +247,7 @@ namespace MUNity.Models.ListOfSpeakers
                 if (Status != EStatus.Question && Status != EStatus.QuestionPaused) return PausedQuestionTime;
 
                 var finishTime = StartQuestionTime.AddSeconds(QuestionTime.TotalSeconds);
-                return finishTime - DateTime.Now;
+                return finishTime - DateTime.Now.ToUniversalTime();
             }
         }
 
@@ -399,7 +399,7 @@ namespace MUNity.Models.ListOfSpeakers
         /// <summary>
         /// Gets called when a property inside the ListOfSpeakers has changed. This does not include the ListOfSpeakersId and the Speakers/Questions.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;Re
 
         /// <summary>
         /// Fire the PropertyChanged Event for a property with the given name.
