@@ -8,10 +8,10 @@
     <Copyright>Copyright 2020</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/PeerConradi/munityData</RepositoryUrl>
-    <PackageReleaseNotes>Simulation User Abstraction</PackageReleaseNotes>
-    <AssemblyVersion>1.0.17.0</AssemblyVersion>
-    <FileVersion>1.0.17.0</FileVersion>
-    <Version>1.0.17</Version>
+    <PackageReleaseNotes>New List of Speakers implementation way.</PackageReleaseNotes>
+    <AssemblyVersion>1.0.18.0</AssemblyVersion>
+    <FileVersion>1.0.18.0</FileVersion>
+    <Version>1.0.18</Version>
     <PackageId>MUNityBase</PackageId>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
