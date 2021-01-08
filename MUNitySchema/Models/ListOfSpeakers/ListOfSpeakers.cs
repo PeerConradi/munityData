@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace MUNity.Models.ListOfSpeakers
 {
@@ -204,6 +205,7 @@ namespace MUNity.Models.ListOfSpeakers
         /// This will not fire any sort of PropertyChanged event. If you want to implement a countdown
         /// you will have to create a timer and recall this getter every Second.
         /// </summary>
+        [JsonIgnore]
         public TimeSpan RemainingSpeakerTime
         {
             get
@@ -232,6 +234,7 @@ namespace MUNity.Models.ListOfSpeakers
         /// Note that this will not fire a PropertyChangedEvent. If you want to create a countdown
         /// you will have to call this getter with a timer every second or minute howevery you want the countdown to happen.
         /// </summary>
+        [JsonIgnore]
         public TimeSpan RemainingQuestionTime
         {
             get
@@ -251,6 +254,7 @@ namespace MUNity.Models.ListOfSpeakers
         /// <summary>
         /// A list of speakers that are waiting to speak next.
         /// </summary>
+        [JsonIgnore]
         public IEnumerable<Speaker> Speakers
         {
             get
@@ -262,6 +266,7 @@ namespace MUNity.Models.ListOfSpeakers
         /// <summary>
         /// A list of people that want to ask a question.
         /// </summary>
+        [JsonIgnore]
         public IEnumerable<Speaker> Questions
         {
             get
@@ -273,11 +278,13 @@ namespace MUNity.Models.ListOfSpeakers
         /// <summary>
         /// The person currently speaking or waiting to answer a question.
         /// </summary>
+        [JsonIgnore]
         public Speaker CurrentSpeaker => AllSpeakers.FirstOrDefault(n => n.Mode == Speaker.SpeakerModes.CurrentlySpeaking);
 
         /// <summary>
         /// The person currently asking a question.
         /// </summary>
+        [JsonIgnore]
         public Speaker CurrentQuestion => AllSpeakers.FirstOrDefault(n => n.Mode == Speaker.SpeakerModes.CurrentQuestion);
 
 
