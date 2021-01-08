@@ -417,37 +417,38 @@ namespace MUNity.Models.ListOfSpeakers
         /// <returns></returns>
         public int CompareTo(ListOfSpeakers other)
         {
-            try
-            {
-                if (this.ListOfSpeakersId != other.ListOfSpeakersId) return 1;
+            if (this.ListOfSpeakersId != other.ListOfSpeakersId) return 1;
+            if (this.CurrentQuestion == null && other.CurrentQuestion != null) return 1;
+            if (this.CurrentQuestion != null && other.CurrentQuestion == null) return 1;
+            if (this.CurrentQuestion != null && other.CurrentQuestion != null)
                 if (this.CurrentQuestion.CompareTo(other.CurrentQuestion) != 0) return 1;
-                if (this.CurrentSpeaker.CompareTo(other.CurrentSpeaker) != 0) return 1;
-                if (this.ListClosed != other.ListClosed) return 1;
-                if (this.Name != other.Name) return 1;
-                if (this.PausedQuestionTime != other.PausedQuestionTime) return 1;
-                if (this.PausedSpeakerTime != other.PausedSpeakerTime) return 1;
-                if (this.PublicId != other.PublicId) return 1;
-                if (this.QuestionsClosed != other.QuestionsClosed) return 1;
-                if (this.QuestionTime != other.QuestionTime) return 1;
-                if (this.SpeakerTime != other.SpeakerTime) return 1;
-                if (this.StartQuestionTime != other.StartQuestionTime) return 1;
-                if (this.StartSpeakerTime != other.StartSpeakerTime) return 1;
-                if (this.Status != other.Status) return 1;
-                if (this.AllSpeakers.Count != other.AllSpeakers.Count) return 1;
-                if (this.AllSpeakers.Any() && other.AllSpeakers.Any())
-                {
-                    for (int i = 0; i < this.AllSpeakers.Count; i++)
-                    {
-                        if (this.AllSpeakers[i].CompareTo(other.AllSpeakers[i]) != 0) return 1;
-                    }
-                }
 
-                return 0;
-            }
-            catch (Exception ex)
+            if (this.CurrentSpeaker == null && other.CurrentSpeaker != null) return 1;
+            if (this.CurrentSpeaker != null && other.CurrentSpeaker == null) return 1;
+            if (this.CurrentSpeaker != null && other.CurrentSpeaker != null)
+                if (this.CurrentSpeaker.CompareTo(other.CurrentSpeaker) != 0) return 1;
+
+            if (this.ListClosed != other.ListClosed) return 1;
+            if (this.Name != other.Name) return 1;
+            if (this.PausedQuestionTime != other.PausedQuestionTime) return 1;
+            if (this.PausedSpeakerTime != other.PausedSpeakerTime) return 1;
+            if (this.PublicId != other.PublicId) return 1;
+            if (this.QuestionsClosed != other.QuestionsClosed) return 1;
+            if (this.QuestionTime != other.QuestionTime) return 1;
+            if (this.SpeakerTime != other.SpeakerTime) return 1;
+            if (this.StartQuestionTime != other.StartQuestionTime) return 1;
+            if (this.StartSpeakerTime != other.StartSpeakerTime) return 1;
+            if (this.Status != other.Status) return 1;
+            if (this.AllSpeakers.Count != other.AllSpeakers.Count) return 1;
+            if (this.AllSpeakers.Any() && other.AllSpeakers.Any())
             {
-                throw new Exception(ex.Message, ex);
+                for (int i = 0; i < this.AllSpeakers.Count; i++)
+                {
+                    if (this.AllSpeakers[i].CompareTo(other.AllSpeakers[i]) != 0) return 1;
+                }
             }
+
+            return 0;
             
         }
     }
