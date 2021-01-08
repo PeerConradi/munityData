@@ -200,7 +200,7 @@ namespace MUNity.Extensions.LoSExtensions
                 Id = Guid.NewGuid().ToString(),
                 Iso = iso,
                 Name = name,
-                ListOfSpeakersId = list.ListOfSpeakersId,
+                ListOfSpeakers = list,
                 Mode = Speaker.SpeakerModes.WaitToSpeak
             };
             if (list.Speakers.Any())
@@ -225,7 +225,7 @@ namespace MUNity.Extensions.LoSExtensions
                 Id = Guid.NewGuid().ToString(),
                 Iso = iso,
                 Name = name,
-                ListOfSpeakersId = list.ListOfSpeakersId,
+                ListOfSpeakers = list,
                 Mode = Speaker.SpeakerModes.WaitForQuesiton
             };
             if (list.Questions.Any())

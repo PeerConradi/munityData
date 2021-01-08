@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace MUNity.Models.ListOfSpeakers
 {
@@ -115,7 +116,8 @@ namespace MUNity.Models.ListOfSpeakers
         /// <summary>
         /// The Parent SpeakerlistId
         /// </summary>
-        public string ListOfSpeakersId { get; set; }
+        [JsonIgnore]
+        public ListOfSpeakers ListOfSpeakers { get; set; }
 
         /// <summary>
         /// Gets called when a proeprty has been changed. This does not inclide the SpeakerlistId or the Id.
@@ -137,7 +139,6 @@ namespace MUNity.Models.ListOfSpeakers
             if (this.Iso != other.Iso) return 1;
             if (this.Name != other.Name) return 1;
             if (this.OrdnerIndex != other.OrdnerIndex) return 1;
-            if (this.ListOfSpeakersId != other.ListOfSpeakersId) return 1;
             return 0;
         }
     }
