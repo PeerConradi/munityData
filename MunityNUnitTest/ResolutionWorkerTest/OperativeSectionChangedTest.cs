@@ -9,16 +9,16 @@ namespace MunityNUnitTest.ResolutionWorkerTest
 {
     public class OperativeSectionChangedTest
     {
-        [Test]
-        public void TestCalledOnSectionReplaced()
-        {
-            var resolution = new Resolution();
-            bool wasRaised = false;
-            var worker = new MUNity.ServiceWorkers.ResolutionWorker(resolution);
-            worker.OperativeSectionChanged += delegate { wasRaised = true; };
-            resolution.OperativeSection = new OperativeSection();
-            Assert.IsTrue(wasRaised);
-        }
+        //[Test]
+        //public void TestCalledOnSectionReplaced()
+        //{
+        //    var resolution = new Resolution();
+        //    bool wasRaised = false;
+        //    var worker = new MUNity.ServiceWorkers.ResolutionWorker(resolution);
+        //    worker.OperativeSectionChanged += delegate { wasRaised = true; };
+        //    resolution.OperativeSection = new OperativeSection();
+        //    Assert.IsTrue(wasRaised);
+        //}
 
         [Test]
         public void TestCalledOnParagraphAdded()

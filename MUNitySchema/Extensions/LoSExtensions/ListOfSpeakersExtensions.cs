@@ -18,19 +18,30 @@ namespace MUNity.Extensions.LoSExtensions
         /// <summary>
         /// Sets the next speaker as current speaker and removes him/her from the list.
         /// If there is noone in the Speakers the current speaker will be set to null.
+        /// This call will also clear the list of Questions and remove the current question.
         /// This will set the speaking mode to stopped.
         /// </summary>
         /// <param name="list"></param>
         public static void NextSpeaker(this ListOfSpeakers list)
         {
-            if (list.Speakers.Any())
+            if (list.Speakers.Any(n => n.Mode == Speaker.SpeakerModes.WaitToSpeak))
             {
-                list.CurrentSpeaker = list.Speakers.First();
-                list.Speakers.Remove(list.Speakers.First());
+
+                // Remove all Questions, Current Speakers and the one currently asking a Question.
+                var questions = list.AllSpeakers.Where(n => n.Mode != Speaker.SpeakerModes.WaitToSpeak).ToList();
+                questions.ForEach(n => list.AllSpeakers.Remove(n));
+
+                // Pick the first speaker in line
+                var nextSpeaker = list.AllSpeakers.OrderBy(n => n.OrdnerIndex).First();
+                nextSpeaker.Mode = Speaker.SpeakerModes.CurrentlySpeaking;
+                list.NotifyPropertyChanged(nameof(list.CurrentSpeaker));
+                list.NotifyPropertyChanged(nameof(list.CurrentQuestion));
+                list.NotifyPropertyChanged(nameof(list.Questions));
+                list.NotifyPropertyChanged(nameof(list.Speakers));
             }
             else
             {
-                list.CurrentSpeaker = null;
+                list.ClearCurrentSpeaker();
             }
             list.Status = EStatus.Stopped;
         }
@@ -45,12 +56,18 @@ namespace MUNity.Extensions.LoSExtensions
         {
             if (list.Questions.Any())
             {
-                list.CurrentQuestion = list.Questions.First();
-                list.Questions.Remove(list.Questions.First());
+                // Delete the current Questions (remove all of this type of there is a bug and for some reason two are current Speaker)
+                var currentQuestion = list.AllSpeakers.Where(n => n.Mode == Speaker.SpeakerModes.CurrentQuestion).ToList();
+                currentQuestion.ForEach(n => list.AllSpeakers.Remove(n));
+
+                var nextQuestion = list.AllSpeakers.Where(n => n.Mode == Speaker.SpeakerModes.WaitForQuesiton).OrderBy(n => n.OrdnerIndex).First();
+                nextQuestion.Mode = Speaker.SpeakerModes.CurrentQuestion;
+                list.NotifyPropertyChanged(nameof(list.Questions));
+                list.NotifyPropertyChanged(nameof(list.CurrentQuestion));
             }
             else
             {
-                list.CurrentQuestion = null;
+                list.ClearCurrentQuestion();
             }
             list.Status = EStatus.Stopped;
         }
@@ -182,9 +199,15 @@ namespace MUNity.Extensions.LoSExtensions
             {
                 Id = Guid.NewGuid().ToString(),
                 Iso = iso,
-                Name = name
+                Name = name,
+                ListOfSpeakersId = list.ListOfSpeakersId,
+                Mode = Speaker.SpeakerModes.WaitToSpeak
             };
-            list.Speakers.Add(newSpeaker);
+            if (list.Speakers.Any())
+            {
+                newSpeaker.OrdnerIndex = list.Speakers.Max(n => n.OrdnerIndex) + 1;
+            }
+            list.AllSpeakers.Add(newSpeaker);
             return newSpeaker;
         }
 
@@ -201,9 +224,14 @@ namespace MUNity.Extensions.LoSExtensions
             {
                 Id = Guid.NewGuid().ToString(),
                 Iso = iso,
-                Name = name
+                Name = name,
+                ListOfSpeakersId = list.ListOfSpeakersId,
+                Mode = Speaker.SpeakerModes.WaitForQuesiton
             };
-            list.Questions.Add(newSpeaker);
+            if (list.Questions.Any())
+            {
+                newSpeaker.OrdnerIndex = list.Questions.Max(n => n.OrdnerIndex) + 1;
+            }
             return newSpeaker;
         }
 
@@ -215,7 +243,10 @@ namespace MUNity.Extensions.LoSExtensions
         {
             if (list.Status == EStatus.Speaking || list.Status == EStatus.SpeakerPaused || list.Status == EStatus.Answer || list.Status == EStatus.AnswerPaused)
                 list.Status = EStatus.Stopped;
-            list.CurrentQuestion = null;
+            // Delete the current Speaker (remove all of this type of there is a bug and for some reason two are current Speaker)
+            var currentSpeakers = list.AllSpeakers.Where(n => n.Mode == Speaker.SpeakerModes.CurrentlySpeaking).ToList();
+            currentSpeakers.ForEach(n => list.AllSpeakers.Remove(n));
+            list.NotifyPropertyChanged(nameof(list.CurrentSpeaker));
         }
 
         /// <summary>
@@ -226,7 +257,10 @@ namespace MUNity.Extensions.LoSExtensions
         {
             if (list.Status == EStatus.Question || list.Status == EStatus.QuestionPaused)
                 list.Status = EStatus.Stopped;
-            list.CurrentQuestion = null;
+            // Delete the current Questions (remove all of this type of there is a bug and for some reason two are current Speaker)
+            var currentQuestion = list.AllSpeakers.Where(n => n.Mode == Speaker.SpeakerModes.CurrentQuestion).ToList();
+            currentQuestion.ForEach(n => list.AllSpeakers.Remove(n));
+            list.NotifyPropertyChanged(nameof(list.CurrentQuestion));
         }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace MunityNUnitTest.ListOfSpeakerTest
             var instance = new ListOfSpeakers();
             var speaker = instance.AddSpeaker("Speaker 1");
             Assert.NotNull(speaker);
-            Assert.Contains(speaker, instance.Speakers);
+            Assert.IsTrue(instance.Speakers.Any(n => n.Name == "Speaker 1"));
         }
 
         /// <summary>

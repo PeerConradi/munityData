@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
+using System.Linq;
 
 namespace MUNity.Models.ListOfSpeakers
 {
@@ -243,47 +244,42 @@ namespace MUNity.Models.ListOfSpeakers
         }
 
         /// <summary>
+        /// List that holds all Speakers that are inside the Speakers or Questions List and also the Current Speaker/Question.
+        /// </summary>
+        public ObservableCollection<Speaker> AllSpeakers { get; set; }
+
+        /// <summary>
         /// A list of speakers that are waiting to speak next.
         /// </summary>
-        public ObservableCollection<Speaker> Speakers { get; set; } = new ObservableCollection<Speaker>();
+        public IEnumerable<Speaker> Speakers
+        {
+            get
+            {
+                return AllSpeakers.Where(n => n.Mode == Speaker.SpeakerModes.WaitToSpeak).OrderBy(n => n.OrdnerIndex);
+            }
+        }
 
         /// <summary>
         /// A list of people that want to ask a question.
         /// </summary>
-        public ObservableCollection<Speaker> Questions { get; set; } = new ObservableCollection<Speaker>();
+        public IEnumerable<Speaker> Questions
+        {
+            get
+            {
+                return AllSpeakers.Where(n => n.Mode == Speaker.SpeakerModes.WaitForQuesiton).OrderBy(n => n.OrdnerIndex);
+            }
+        }
 
-        private Speaker _speaker;
         /// <summary>
         /// The person currently speaking or waiting to answer a question.
         /// </summary>
-        public Speaker CurrentSpeaker 
-        {
-            get => _speaker;
-            set
-            {
-                if (_speaker != value)
-                {
-                    this._speaker = value;
-                    NotifyPropertyChanged(nameof(CurrentSpeaker));
-                }
-            }
-        }
+        public Speaker CurrentSpeaker => AllSpeakers.FirstOrDefault(n => n.Mode == Speaker.SpeakerModes.CurrentlySpeaking);
 
-        private Speaker _currentQuestion;
         /// <summary>
         /// The person currently asking a question.
         /// </summary>
-        public Speaker CurrentQuestion {
-            get => _currentQuestion;
-            set
-            {
-                if (_currentQuestion != value)
-                {
-                    _currentQuestion = value;
-                    NotifyPropertyChanged(nameof(CurrentQuestion));
-                }
-            }
-        }
+        public Speaker CurrentQuestion => AllSpeakers.FirstOrDefault(n => n.Mode == Speaker.SpeakerModes.CurrentQuestion);
+
 
         private bool _listClosed = false;
         /// <summary>
@@ -364,20 +360,40 @@ namespace MUNity.Models.ListOfSpeakers
         /// </summary>
         public ListOfSpeakers()
         {
-            this.Speakers = new ObservableCollection<Speaker>();
-            this.Questions = new ObservableCollection<Speaker>();
             this.ListOfSpeakersId = Guid.NewGuid().ToString();
             this.SpeakerTime = new TimeSpan(0, 3, 0);
             this.QuestionTime = new TimeSpan(0, 0, 30);
             this.PausedSpeakerTime = this.SpeakerTime;
             this.PausedQuestionTime = this.QuestionTime;
+            AllSpeakers = new ObservableCollection<Speaker>();
+            AllSpeakers.CollectionChanged += _allSpeakers_CollectionChanged;
+        }
+
+        private void _allSpeakers_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                if (e.NewItems.OfType<Speaker>().Any(n => n.Mode == Speaker.SpeakerModes.WaitToSpeak))
+                {
+                    NotifyPropertyChanged(nameof(Speakers));
+                }
+                if (e.NewItems.OfType<Speaker>().Any(n => n.Mode == Speaker.SpeakerModes.WaitForQuesiton))
+                {
+                    NotifyPropertyChanged(nameof(Questions));
+                }
+            }
         }
 
         /// <summary>
         /// Gets called when a property inside the ListOfSpeakers has changed. This does not include the ListOfSpeakersId and the Speakers/Questions.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(string name)
+
+        /// <summary>
+        /// Fire the PropertyChanged Event for a property with the given name.
+        /// </summary>
+        /// <param name="name"></param>
+        public void NotifyPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
