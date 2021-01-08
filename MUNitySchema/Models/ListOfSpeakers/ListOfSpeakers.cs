@@ -399,7 +399,7 @@ namespace MUNity.Models.ListOfSpeakers
         /// <summary>
         /// Gets called when a property inside the ListOfSpeakers has changed. This does not include the ListOfSpeakersId and the Speakers/Questions.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;Re
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Fire the PropertyChanged Event for a property with the given name.
