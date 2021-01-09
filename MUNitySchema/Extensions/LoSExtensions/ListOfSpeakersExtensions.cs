@@ -232,6 +232,7 @@ namespace MUNity.Extensions.LoSExtensions
             {
                 newSpeaker.OrdnerIndex = list.Questions.Max(n => n.OrdnerIndex) + 1;
             }
+            list.AllSpeakers.Add(newSpeaker);
             return newSpeaker;
         }
 
