@@ -32,6 +32,14 @@ namespace MUNity.Hubs
         Task UserRoleChanged(int simulationId, int userId, int roleId);
 
         /// <summary>
+        /// Should be called or gets called when the List of Users has changed. (User has been added or removed)
+        /// </summary>
+        /// <param name="simulationId"></param>
+        /// <param name="Users"></param>
+        /// <returns></returns>
+        Task UsersChanged(int simulationId, IEnumerable<SimulationUserItem> Users);
+
+        /// <summary>
         /// a new user has connected.
         /// </summary>
         /// <param name="simulationId"></param>
@@ -114,5 +122,21 @@ namespace MUNity.Hubs
         /// <param name="id"></param>
         /// <returns></returns>
         Task ResolutionChanged(string id);
+
+        /// <summary>
+        /// Was a new Voting created.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task VoteCreated(CreatedVoteModel model);
+
+        /// <summary>
+        /// Has someone voted in something.
+        /// </summary>
+        /// <param name="votingId"></param>
+        /// <param name="userId"></param>
+        /// <param name="choice"></param>
+        /// <returns></returns>
+        Task Voted(string votingId, int userId, int choice);
     }
 }
