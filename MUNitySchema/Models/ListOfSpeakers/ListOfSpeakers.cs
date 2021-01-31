@@ -215,7 +215,12 @@ namespace MUNity.Models.ListOfSpeakers
         {
             get
             {
-                if (Status == EStatus.Stopped || Status == EStatus.Question || Status == EStatus.SpeakerPaused || Status == EStatus.QuestionPaused)
+                
+                if (Status == EStatus.Stopped || 
+                    Status == EStatus.Question || 
+                    Status == EStatus.SpeakerPaused || 
+                    Status == EStatus.QuestionPaused || 
+                    Status == EStatus.AnswerPaused)
                 {
                     return PausedSpeakerTime;
                 }
@@ -227,10 +232,15 @@ namespace MUNity.Models.ListOfSpeakers
                     //       |---------------|<-------->|
                     //                          Verbleibende Zeit
                 }
+                else if (Status == EStatus.Answer)
+                {
+                    var finishTime = StartSpeakerTime.AddSeconds(QuestionTime.TotalSeconds);
+                    return finishTime - DateTime.Now.ToUniversalTime();
+                }
 
-                // Fall für das Fortsetzen eienr Antwort!
-                var finishTimeQuestion = StartSpeakerTime.AddSeconds(QuestionTime.TotalSeconds);
-                return finishTimeQuestion - DateTime.Now;
+                // Default return
+                var defaultReturn = StartSpeakerTime.AddSeconds(SpeakerTime.TotalSeconds);
+                return defaultReturn - DateTime.Now.ToUniversalTime();
             }
         }
 
@@ -244,7 +254,7 @@ namespace MUNity.Models.ListOfSpeakers
         {
             get
             {
-                if (Status != EStatus.Question && Status != EStatus.QuestionPaused) return PausedQuestionTime;
+                if (Status != EStatus.Question) return PausedQuestionTime;
 
                 var finishTime = StartQuestionTime.AddSeconds(QuestionTime.TotalSeconds);
                 return finishTime - DateTime.Now.ToUniversalTime();

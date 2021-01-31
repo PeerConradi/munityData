@@ -69,7 +69,16 @@ namespace MUNity.Extensions.LoSExtensions
             {
                 list.ClearCurrentQuestion();
             }
-            list.Status = EStatus.Stopped;
+
+            if (list.Status == EStatus.Speaking)
+            {
+                list.Status = EStatus.SpeakerPaused;
+            }
+            else
+            {
+                list.Status = EStatus.Stopped;
+            }
+            
         }
 
         /// <summary>
@@ -91,6 +100,25 @@ namespace MUNity.Extensions.LoSExtensions
         }
 
         /// <summary>
+        /// Sets the SPeaker as answering. The speaker is now getting the question time as a default
+        /// value.
+        /// </summary>
+        /// <param name="list"></param>
+        public static void StartAnswer(this ListOfSpeakers list)
+        {
+            if (list.CurrentSpeaker != null)
+            {
+                list.PausedQuestionTime = list.QuestionTime;
+                list.StartSpeakerTime = DateTime.Now.ToUniversalTime();
+                list.Status = EStatus.Answer;
+            }
+            else
+            {
+                list.Status = EStatus.Stopped;
+            }
+        }
+
+        /// <summary>
         /// This will give the Question the full QuestionTime and set the Mode to question.
         /// </summary>
         /// <param name="list"></param>
@@ -98,6 +126,7 @@ namespace MUNity.Extensions.LoSExtensions
         {
             if (list.CurrentQuestion != null)
             {
+                // Reset the current Speaker time
                 list.PausedSpeakerTime = list.SpeakerTime;
                 list.StartQuestionTime = DateTime.Now.ToUniversalTime();
                 list.Status = EStatus.Question;
@@ -150,17 +179,24 @@ namespace MUNity.Extensions.LoSExtensions
             if (list.CurrentSpeaker != null)
             {
                 if (list.Status == EStatus.SpeakerPaused)
+                {
                     list.StartSpeakerTime = DateTime.Now.ToUniversalTime().AddSeconds(list.RemainingSpeakerTime.TotalSeconds - list.SpeakerTime.TotalSeconds);
+                    list.Status = EStatus.Speaking;
+                }  
                 else if (list.Status == EStatus.AnswerPaused)
+                {
                     list.StartSpeakerTime = DateTime.Now.ToUniversalTime().AddSeconds(list.RemainingSpeakerTime.TotalSeconds - list.QuestionTime.TotalSeconds);
+                    list.Status = EStatus.Answer;
+                }
                 else
                 {
                     list.StartSpeakerTime = DateTime.Now.ToUniversalTime();
+                    list.Status = EStatus.Speaking;
                 }
 
                 // Fixes a small glitch in the Question time!
                 list.StartQuestionTime = DateTime.Now.ToUniversalTime();
-                list.Status = EStatus.Speaking;
+                
             }
             else
             {

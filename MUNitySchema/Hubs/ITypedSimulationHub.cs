@@ -17,10 +17,9 @@ namespace MUNity.Hubs
         /// <summary>
         /// The available roles of the Simulation have changed.
         /// </summary>
-        /// <param name="simulationId"></param>
-        /// <param name="Roles"></param>
+        /// <param name="args"></param>
         /// <returns></returns>
-        Task RolesChanged(int simulationId, IEnumerable<SimulationRoleItem> Roles);
+        Task RolesChanged(RolesChangedEventArgs args);
 
         /// <summary>
         /// Some user with the given id has picked a new role.
@@ -29,7 +28,7 @@ namespace MUNity.Hubs
         /// <param name="userId"></param>
         /// <param name="roleId"></param>
         /// <returns></returns>
-        Task UserRoleChanged(int simulationId, int userId, int roleId);
+        Task UserRoleChanged(UserRoleChangedEventArgs args);
 
         /// <summary>
         /// Should be called or gets called when the List of Users has changed. (User has been added or removed)
@@ -37,7 +36,7 @@ namespace MUNity.Hubs
         /// <param name="simulationId"></param>
         /// <param name="Users"></param>
         /// <returns></returns>
-        Task UsersChanged(int simulationId, IEnumerable<SimulationUserItem> Users);
+        Task UsersChanged(UsersChangedEventArgs args);
 
         /// <summary>
         /// a new user has connected.
@@ -133,10 +132,8 @@ namespace MUNity.Hubs
         /// <summary>
         /// Has someone voted in something.
         /// </summary>
-        /// <param name="votingId"></param>
-        /// <param name="userId"></param>
-        /// <param name="choice"></param>
+        /// <param name="args">Arguments</param>
         /// <returns></returns>
-        Task Voted(string votingId, int userId, int choice);
+        Task Voted(VotedEventArgs args);
     }
 }

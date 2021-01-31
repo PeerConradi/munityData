@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MUNitySchema.Extensions.SimulationExtensions
+namespace MUNity.Extensions.SimulationExtensions
 {
     /// <summary>
     /// Gives a libary of functions for the Simulation.
     /// </summary>
     public static class PetitionTools
     {
+        public enum EPetitionCategory
+        {
+            Personal,
+            RuleOfProcedure,
+            Unknown
+        }
 
         /// <summary>
         /// Returns the Display Text of the given Petition type.
@@ -52,6 +58,32 @@ namespace MUNitySchema.Extensions.SimulationExtensions
                     return "Anhörung eines Gastredners";
                 default:
                     return type.ToString();
+            }
+        }
+
+        public static EPetitionCategory Category(this MUNity.Schema.Simulation.Petition.PetitionTypes type)
+        {
+            switch (type)
+            {
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.PersRechtAufInformation:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.PersRechtAufOrdnung:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.PersRechtAufKlaerung:
+                    return EPetitionCategory.Personal;
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GOMuendlicheAbstimmung:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GORevision:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GOInformelleSitzung:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GONeuTagesordnungspunkt:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GOZurueckResolutionsentwurf:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GOVertagung:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GORueckAllgDebatte:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GOEndeDebatte:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GOVorgezogenAbstReso:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GOAbschlussRedeliste:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GOAendereRedezeit:
+                case MUNity.Schema.Simulation.Petition.PetitionTypes.GOGastredner:
+                    return EPetitionCategory.RuleOfProcedure;
+                default:
+                    return EPetitionCategory.Unknown;
             }
         }
 
