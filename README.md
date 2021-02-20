@@ -1,4 +1,9 @@
 # MUNity Base
+
+# Importand
+This repository is discontinued and you can find a new version within the munity main repository:
+https://github.com/PeerConradi/munity
+
 [![NuGet Badge](https://buildstats.info/nuget/MUNityBase)](https://www.nuget.org/packages/MUNityBase/)
 
 ## About
