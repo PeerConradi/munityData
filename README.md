@@ -1,6 +1,6 @@
 # MUNity Base
 
-# Importand
+# Important
 This repository is discontinued and you can find a new version within the munity main repository:
 https://github.com/PeerConradi/munity
 
